@@ -32,7 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-LazerMazeProductionBuild/Assets/Art/Sprites/Brody/Brody.mat
 *.meta
 *.png
 *.unity
