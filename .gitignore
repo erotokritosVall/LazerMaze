@@ -54,3 +54,4 @@ LazerMazeProductionBuild/Library
 *.dll
 *.mat
 *.overrideController
+*.physicMaterial
