@@ -55,3 +55,4 @@ LazerMazeProductionBuild/Library
 *.mat
 *.overrideController
 *.physicMaterial
+*.prefab
