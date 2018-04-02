@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace Assets.Scripts.MazeGenerator {
+﻿namespace Assets.Scripts.MazeGenerator {
 
     /**
      * Holds wall data to be consumed by the MazeNode
