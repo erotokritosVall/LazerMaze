@@ -10,14 +10,15 @@ namespace Assets.Scripts.MazeGenerator {
     public class MazeGenerator {
         private int sizeX;
         private int sizeZ;
+        private MazeNode[,] grid;
 
         public MazeGenerator(int sizeX, int sizeZ) {
             this.sizeX = sizeX;
             this.sizeZ = sizeZ;
+            grid = new MazeNode[sizeX, sizeZ];
         }
 
-        private MazeNode[,] CreateGrid() {
-            MazeNode[,] grid = new MazeNode[sizeX, sizeZ];
+        private void CreateGrid() {
             for (int i = 0; i < sizeX; i++) {
                 for (int j = 0; j < sizeZ; j++) {
                     grid[i, j] = new MazeNode();
@@ -51,10 +52,9 @@ namespace Assets.Scripts.MazeGenerator {
                     }
                 }
             }
-            return grid;
         }
 
-        private MazeNode[,] GenerateMaze(MazeNode[,] grid) {
+        private MazeNode[,] GenerateMaze() {
             MazeNode startingNode = grid[0, 0];
             List<WallNode> openSet = new List<WallNode>();
             HashSet<MazeNode> closedSet = new HashSet<MazeNode>();
@@ -80,7 +80,8 @@ namespace Assets.Scripts.MazeGenerator {
         }
 
         public MazeNode[,] Generate() {
-            return GenerateMaze(CreateGrid());
+            CreateGrid();
+            return GenerateMaze();
         }
     }
 }
