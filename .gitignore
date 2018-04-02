@@ -53,3 +53,6 @@ LazerMazeProductionBuild/Library
 *.mdb
 *.dll
 *.mat
+*.ide-shm
+*.ide-wal
+LazerMazeProductionBuild/Temp/UnityLockfile
