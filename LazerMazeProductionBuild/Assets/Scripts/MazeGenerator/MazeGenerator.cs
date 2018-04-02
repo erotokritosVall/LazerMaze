@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Assets.Scripts.MazeGenerator {
+
+    /**
+     * Generates wall positions so the spawner can instantiate a maze
+     */
+
+    public class MazeGenerator {
+        private int sizeX;
+        private int sizeZ;
+
+        public MazeGenerator(int sizeX, int sizeZ) {
+            this.sizeX = sizeX;
+            this.sizeZ = sizeZ;
+        }
+
+        private MazeNode[,] CreateGrid() {
+            MazeNode[,] grid = new MazeNode[sizeX, sizeZ];
+            for (int i = 0; i < sizeX; i++) {
+                for (int j = 0; j < sizeZ; j++) {
+                    grid[i, j] = new MazeNode();
+
+                    foreach(WallNode wall in grid[i, j].Walls) {
+                        switch (wall.Orientation) {
+                            case WallOrientation.N:
+                                if (j + 1 < sizeZ) {
+                                wall.Neighbor = grid[i, j + 1];
+                            }
+                            break;
+
+                            case WallOrientation.S:
+                                if (j - 1 >= 0) {
+                                wall.Neighbor = grid[i, j - 1];
+                            }
+                            break;
+
+                            case WallOrientation.E:
+                                if (i + 1 < sizeX) {
+                                wall.Neighbor = grid[i + 1, j];
+                            }
+                            break;
+
+                            default:
+                                if (i - 1 >= 0) {
+                                wall.Neighbor = grid[i - 1, j];
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            return grid;
+        }
+
+        private MazeNode[,] GenerateMaze(MazeNode[,] grid) {
+            MazeNode startingNode = grid[0, 0];
+            List<WallNode> openSet = new List<WallNode>();
+            HashSet<MazeNode> closedSet = new HashSet<MazeNode>();
+            openSet.AddRange(startingNode.Walls);
+            closedSet.Add(startingNode);
+
+            while(openSet.Count != 0) {
+                int randomIndex = UnityEngine.Random.Range(0, openSet.Count);
+                WallNode currentWall = openSet[randomIndex];
+                MazeNode neighborOfCurrentWall = currentWall.Neighbor;
+                if (neighborOfCurrentWall != null && !closedSet.Contains(neighborOfCurrentWall)) {
+                    currentWall.Parent.RemoveWall(currentWall);
+                    int oppositeWallToRemove = -(int)currentWall.Orientation;
+                    neighborOfCurrentWall.RemoveWall(oppositeWallToRemove);
+                    openSet.AddRange(neighborOfCurrentWall.Walls);
+                    openSet.Remove(currentWall);
+                    closedSet.Add(neighborOfCurrentWall);
+                } else {
+                    openSet.Remove(currentWall);
+                }
+            }
+            return grid;
+        }
+
+        public MazeNode[,] Generate() {
+            return GenerateMaze(CreateGrid());
+        }
+    }
+}

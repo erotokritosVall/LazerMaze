@@ -31,7 +31,7 @@ namespace Assets.Scripts.MazeGenerator {
         }
 
         public void RemoveWall(int orientation) {
-            walls.Remove(walls.FirstOrDefault(wall => (int)wall.Orientation == orientation));
+            walls.Remove(walls.First(wall => (int)wall.Orientation == orientation));
         }
     }
 }

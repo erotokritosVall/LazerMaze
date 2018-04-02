@@ -9,7 +9,7 @@ namespace Assets.Scripts.MazeGenerator {
     public class WallNode {
         public WallOrientation Orientation { get; private set; }
         public MazeNode Parent { get; private set; }
-        public MazeNode Neighbor { get; private set; }
+        public MazeNode Neighbor { get; set; }
 
         public WallNode(WallOrientation orientation, MazeNode parent) {
             this.Orientation = orientation;
