@@ -81,10 +81,23 @@ namespace Assets.Scripts.MazeGrid {
             }
         }
 
+        private void CleanupDuplicates() {
+            foreach (MazeNode currentNode in grid) {
+                foreach (WallNode currentWall in currentNode.Walls) {
+                    MazeNode wallNeighbor = currentWall.Neighbor;
+                        if (wallNeighbor != null) {
+                        int oppositeWall = -(int)currentWall.Orientation;
+                        wallNeighbor.RemoveWall(oppositeWall);
+                    }
+                }
+            }
+        }
+
         public MazeNode[,] Generate() {
             CreateGrid();
             AddWallNeighbors();
             GenerateMaze();
+            CleanupDuplicates();
             return grid;
         }
     }
