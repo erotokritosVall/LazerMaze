@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-namespace Assets.Scripts.MazeGenerator {
+namespace Assets.Scripts.MazeGrid {
 
     /**
      * Holds data to be consumed my the MazeGenerator
      */
     public class MazeNode {
         private List<WallNode> walls = new List<WallNode>();
-
         public List<WallNode> Walls {
             get { return walls; }
         }
@@ -30,6 +30,7 @@ namespace Assets.Scripts.MazeGenerator {
 
         public void RemoveWall(int orientation) {
             walls.Remove(walls.First(wall => (int)wall.Orientation == orientation));
+            Debug.Log("Wall removed");
         }
     }
 }

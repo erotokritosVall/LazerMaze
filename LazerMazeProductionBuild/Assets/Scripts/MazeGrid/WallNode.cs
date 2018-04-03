@@ -1,12 +1,12 @@
-﻿namespace Assets.Scripts.MazeGenerator {
+﻿namespace Assets.Scripts.MazeGrid {
 
     /**
      * Holds wall data to be consumed by the MazeNode
      */
     public class WallNode {
+        public MazeNode Neighbor { get; set; }
         public WallOrientation Orientation { get; private set; }
         public MazeNode Parent { get; private set; }
-        public MazeNode Neighbor { get; set; }
 
         public WallNode(WallOrientation orientation, MazeNode parent) {
             this.Orientation = orientation;

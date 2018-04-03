@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Pathfinding;
+﻿using Assets.Scripts.Pathfinding;
 using UnityEngine;
 
-namespace Assets.Scripts.MazeGenerator {
+namespace Assets.Scripts.MazeGrid {
 
     /**
      * Helper function to convert MazeNodes to PathfinderNode
