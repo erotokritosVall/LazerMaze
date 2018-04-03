@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Pathfinding;
+﻿using Assets.Scripts.Pathfinding;
 using Assets.Scripts.MazeGrid;
 using UnityEngine;
 
@@ -21,7 +17,7 @@ namespace Assets.Scripts.Managers {
         public PathfinderNode[,] PathfinderGrid { get; private set; }
 
         private void Awake() {
-            sizeX = sizeZ = 50;
+            sizeX = sizeZ = 15;
             SetupLevel();
         }
 
@@ -29,7 +25,8 @@ namespace Assets.Scripts.Managers {
             MazeGenerator generator = new MazeGenerator(sizeX, sizeZ);
             MazeNode[,] mazeGrid = generator.Generate();
             SpawnTiles(mazeGrid);
-            PathfinderGrid = MazeNodeToPathfinderNode.Convert(mazeGrid);
+            MazeNodeToPathfinderNode converter = new MazeNodeToPathfinderNode(sizeX, sizeZ);
+            PathfinderGrid = converter.Convert(mazeGrid);
         }
 
         private void SpawnTiles(MazeNode[,] grid) {
@@ -37,28 +34,28 @@ namespace Assets.Scripts.Managers {
             const float wallYPos = 0.2f;
             for (int x = 0; x < sizeX; x++) {
                 for (int z = 0; z < sizeZ; z++) {
-                    Vector3 spawnPosition = new Vector3(x, 0, z);
-                    Transform spawnedTile = Instantiate(floorTilePrefab, spawnPosition, Quaternion.identity, transform).transform;
+                    Vector3 floorSpawnPosition = new Vector3(x, 0, z);
+                    Transform spawnedTile = Instantiate(floorTilePrefab, floorSpawnPosition, Quaternion.identity, transform).transform;
                     foreach(WallNode wall in grid[x, z].Walls) {
-                        Vector3 wallSpawnPosition;
+                        Vector3 wallSpawnPosition = new Vector3(x , wallYPos, z);
                         Quaternion wallSpawnRotation = Quaternion.identity;
                         switch (wall.Orientation) {                     
                             case WallOrientation.N:
-                            wallSpawnPosition = new Vector3(x, wallYPos, z + spawnOffset);
+                            wallSpawnPosition.z += spawnOffset;
                             wallSpawnRotation = Quaternion.Euler(0, 90, 0);
                             break;
 
                             case WallOrientation.S:
-                            wallSpawnPosition = new Vector3(x, wallYPos, z - spawnOffset);
+                            wallSpawnPosition.z -= spawnOffset;
                             wallSpawnRotation = Quaternion.Euler(0, 90, 0);
                             break;
 
                             case WallOrientation.E:
-                            wallSpawnPosition = new Vector3(x + spawnOffset, wallYPos, z);
+                            wallSpawnPosition.x += spawnOffset;
                             break;
 
                             default:
-                            wallSpawnPosition = new Vector3(x - spawnOffset, wallYPos, z);
+                            wallSpawnPosition.x -= spawnOffset;
                             break;
                         }
                         Instantiate(wallTilePrefab, wallSpawnPosition, wallSpawnRotation, spawnedTile);
@@ -67,5 +64,10 @@ namespace Assets.Scripts.Managers {
             }
         }
 
+        private void CleanLevel() {
+            foreach(Transform child in transform) {
+                Destroy(child.gameObject);
+            }
+        }
     }
 }

@@ -65,13 +65,14 @@ namespace Assets.Scripts.MazeGrid {
             HashSet<MazeNode> closedSet = new HashSet<MazeNode>();
             openSet.AddRange(startingNode.Walls);
             closedSet.Add(startingNode);
-
             while(openSet.Count != 0) {
                 int randomIndex = UnityEngine.Random.Range(0, openSet.Count);
                 WallNode currentWall = openSet[randomIndex];
                 MazeNode neighborOfCurrentWall = currentWall.Neighbor;
                 if (neighborOfCurrentWall != null && !closedSet.Contains(neighborOfCurrentWall)) {
                     currentWall.Parent.RemoveWall(currentWall);
+                    currentWall.Parent.AddNeighbor(neighborOfCurrentWall);
+                    neighborOfCurrentWall.AddNeighbor(currentWall.Parent);
                     int oppositeWallToRemove = -(int)currentWall.Orientation;
                     neighborOfCurrentWall.RemoveWall(oppositeWallToRemove);
                     openSet.AddRange(neighborOfCurrentWall.Walls);
@@ -85,9 +86,9 @@ namespace Assets.Scripts.MazeGrid {
             foreach (MazeNode currentNode in grid) {
                 foreach (WallNode currentWall in currentNode.Walls) {
                     MazeNode wallNeighbor = currentWall.Neighbor;
-                        if (wallNeighbor != null) {
-                        int oppositeWall = -(int)currentWall.Orientation;
-                        wallNeighbor.RemoveWall(oppositeWall);
+                    if (wallNeighbor != null) {
+                       int oppositeWall = -(int)currentWall.Orientation;
+                       wallNeighbor.RemoveWall(oppositeWall);
                     }
                 }
             }
