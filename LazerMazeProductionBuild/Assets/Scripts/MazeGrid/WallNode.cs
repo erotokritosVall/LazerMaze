@@ -1,7 +1,7 @@
 ﻿namespace Assets.Scripts.MazeGrid {
 
     /**
-     * Holds wall data to be consumed by the MazeNode
+     * Holds wall data to be consumed by the MazeNode and MazeGenerator
      */
     public class WallNode {
         public MazeNode Neighbor { get; set; }

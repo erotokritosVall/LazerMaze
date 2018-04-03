@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.Managers {
 
     /**
-     * Class that spawns the board and holds the pathfinder grid
+     * Responsible for interacting with the maze generator and spawning the maze(floor and walls)
      */
     public class BoardHolder : MonoBehaviour {
         private int sizeX;
@@ -14,7 +14,6 @@ namespace Assets.Scripts.Managers {
         private GameObject floorTilePrefab;
         [SerializeField]
         private GameObject wallTilePrefab;
-        public PathfinderNode[,] PathfinderGrid { get; private set; }
 
         private void Awake() {
             sizeX = sizeZ = 15;
@@ -25,8 +24,7 @@ namespace Assets.Scripts.Managers {
             MazeGenerator generator = new MazeGenerator(sizeX, sizeZ);
             MazeNode[,] mazeGrid = generator.Generate();
             SpawnTiles(mazeGrid);
-            MazeNodeToPathfinderNode converter = new MazeNodeToPathfinderNode(sizeX, sizeZ);
-            PathfinderGrid = converter.Convert(mazeGrid);
+            PathfinderHandler.SetGrid(mazeGrid, sizeX, sizeZ);
         }
 
         private void SpawnTiles(MazeNode[,] grid) {

@@ -3,7 +3,7 @@
 namespace Assets.Scripts.MazeGrid {
 
     /**
-     * Generates wall positions so the spawner can instantiate a maze
+     * Generates the maze using Prim's algorithm, which BoardHolder uses for spawning the level
      */
 
     public class MazeGenerator {
