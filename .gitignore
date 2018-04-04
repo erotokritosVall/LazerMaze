@@ -45,6 +45,7 @@ sysinfo.txt
 *.txt
 *.info
 LazerMazeProductionBuild/Library
+LazerMazeProductionBuild/Temp
 *.json
 *.log
 *.bin
