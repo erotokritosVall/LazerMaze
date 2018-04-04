@@ -27,15 +27,15 @@ namespace Assets.Scripts.Interactables.Concrete {
 
         private void Update() {
             GetInput();
+            animatedRanged.SetAnimatorParameters(XInput, ZInput);
         }
 
         private void FixedUpdate() {
             Vector3 moveDirection = new Vector3(XInput, 0, ZInput);
-            movableBasic.Move(moveDirection, 5.0f);
+            movableBasic.Move(moveDirection.normalized, 5.0f);
         }
 
         private void LateUpdate() {
-            animatedRanged.SetAnimatorParameters(XInput, ZInput);
         }
 
         protected override void GetInput() {
