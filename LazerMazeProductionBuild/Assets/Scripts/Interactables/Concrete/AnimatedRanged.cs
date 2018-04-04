@@ -6,17 +6,23 @@ using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete {
     public class AnimatedRanged : AnimatedHittable {
-        protected const int shootHash = 4;
+        private readonly int shootHash = Animator.StringToHash("bIsShooting");
+        private bool isShooting = false;
+
+        private void ChangeBool() {
+            isShooting = !isShooting;
+            AnimatorController.SetBool(shootHash, isShooting);
+        }
 
         public void OnShootEnable() {
-            if (!AnimatorController.GetBool(shootHash)) {
-                AnimatorController.SetBool(shootHash, true);
+            if (!isShooting && !isWalking) {
+                ChangeBool();
             }
         }
 
         public void OnShootDisable() {
-            if (AnimatorController.GetBool(shootHash)) {
-                AnimatorController.SetBool(shootHash, false);
+            if (isShooting) {
+                ChangeBool();
             }
         }
     }

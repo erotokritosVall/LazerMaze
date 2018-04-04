@@ -9,12 +9,12 @@ namespace Assets.Scripts.Interactables.Concrete {
     public class MovableBasic : Movable {
         private void Awake() {
             RigidBody = GetComponent<Rigidbody>();
-            MoveDirection = transform.position;
-            MoveSpeed = 3.0f;
+            MoveDirection = Vector3.zero;
+            MoveSpeed = 5.0f;
         }
 
-        public override void Move(Vector3 moveDirection, float moveSpeed) {
-            RigidBody.velocity = moveDirection * moveSpeed;
+        public override void Move() {
+            RigidBody.velocity = MoveDirection * MoveSpeed;
         }
     }
 }

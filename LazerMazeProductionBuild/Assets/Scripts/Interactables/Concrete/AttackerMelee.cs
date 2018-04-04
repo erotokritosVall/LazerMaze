@@ -12,9 +12,11 @@ namespace Assets.Scripts.Interactables.Concrete {
             AttackRechargeTimer = TimePassedSincePreviousAttack = 0.8f;
         }
 
-        protected override void Attack(Attackable target = null) {
-            if (target != null) {
-                target.OnHit(AttackDamage);
+        public override void Attack(Attackable target = null) {
+            if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
+                if (target != null) {
+                    target.OnHit(AttackDamage);
+                }
             }
         }
     }

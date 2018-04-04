@@ -17,6 +17,7 @@ namespace Assets.Scripts.Interactables.Concrete {
         private AttackerRanged attackerRanged;
         private AttackableBasic attackableBasic;
         private MovableBasic movableBasic;
+        private bool bShouldShoot = false;
 
         private void Awake() {
             animatedRanged = GetComponent<AnimatedRanged>();
@@ -28,14 +29,24 @@ namespace Assets.Scripts.Interactables.Concrete {
         private void Update() {
             GetInput();
             animatedRanged.SetAnimatorParameters(XInput, ZInput);
+            if (Input.GetMouseButtonDown(0)) {
+                bShouldShoot = true;
+            }
         }
 
         private void FixedUpdate() {
             Vector3 moveDirection = new Vector3(XInput, 0, ZInput);
-            movableBasic.Move(moveDirection.normalized, 5.0f);
+            movableBasic.MoveDirection = moveDirection;
+            movableBasic.Move();
         }
 
         private void LateUpdate() {
+            if (bShouldShoot) {
+                animatedRanged.OnShootEnable();
+                attackerRanged.LaserDirection = new Vector3(animatedRanged.CachedX, 0, animatedRanged.CachedZ);
+                attackerRanged.Attack();
+                bShouldShoot = false;
+            }
         }
 
         protected override void GetInput() {

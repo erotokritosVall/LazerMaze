@@ -8,13 +8,20 @@ using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Interactables.Concrete {
     public class AnimatorController : Animated {
-        protected  int xHash = Animator.StringToHash("xAxis");
-        protected  int zHash = Animator.StringToHash("zAxis");
-        protected readonly int walkHash = Animator.StringToHash("bIsWalking");
         private bool isFacingRight = true;
+        private  readonly int xHash = Animator.StringToHash("xAxis");
+        private  readonly int zHash = Animator.StringToHash("zAxis");
+
+        protected readonly int walkHash = Animator.StringToHash("bIsWalking");
+        protected bool isWalking = false;
+
+        public float CachedX { get; private set; }
+        public float CachedZ { get; private set; }
 
         private void Awake() {
             AnimatorController = GetComponent<Animator>();
+            CachedX = AnimatorController.GetFloat(xHash);
+            CachedZ = AnimatorController.GetFloat(zHash);
         }
 
         private void FlipAnimation() {
@@ -25,13 +32,14 @@ namespace Assets.Scripts.Interactables.Concrete {
         }
 
         public override void SetAnimatorParameters(float xParam, float zParam) {
-            if (AnimatorController.GetBool(walkHash)) {
-                float currentX = AnimatorController.GetFloat(xHash);
-                float currentZ = AnimatorController.GetFloat(zHash);
+            if (isWalking) {
                 if (xParam == 0 && zParam == 0) {
-                    AnimatorController.SetBool(walkHash, false);
+                    isWalking = false;
+                    AnimatorController.SetBool(walkHash, isWalking);
                 } else {
-                    if (currentX != xParam || currentZ != zParam) {
+                    if (CachedX != xParam || CachedZ != zParam) {
+                        CachedX = xParam;
+                        CachedZ = zParam;
                         AnimatorController.SetFloat(xHash, xParam);
                         AnimatorController.SetFloat(zHash, zParam);
                         if (xParam > 0 && !isFacingRight) {
@@ -43,9 +51,12 @@ namespace Assets.Scripts.Interactables.Concrete {
                 }               
             } else {
                 if (xParam != 0 || zParam != 0) {
+                    CachedX = xParam;
+                    CachedZ = zParam;
                     AnimatorController.SetFloat(xHash, xParam);
                     AnimatorController.SetFloat(zHash, zParam);
-                    AnimatorController.SetBool(walkHash, true);
+                    isWalking = true;
+                    AnimatorController.SetBool(walkHash, isWalking);
                     if (xParam > 0 && !isFacingRight) {
                         FlipAnimation();
                     } else if (xParam < 0 && isFacingRight) {
