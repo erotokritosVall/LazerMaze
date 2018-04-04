@@ -33,6 +33,11 @@ namespace Assets.Scripts.Interactables.Concrete {
             Vector3 moveDirection = new Vector3(XInput, 0, ZInput);
             movableBasic.Move(moveDirection, 5.0f);
         }
+
+        private void LateUpdate() {
+            animatedRanged.SetAnimatorParameters(XInput, ZInput);
+        }
+
         protected override void GetInput() {
             XInput = Input.GetAxisRaw("Horizontal");
             ZInput = Input.GetAxisRaw("Vertical");

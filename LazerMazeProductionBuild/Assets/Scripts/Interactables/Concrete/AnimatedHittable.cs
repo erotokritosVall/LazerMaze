@@ -6,11 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete {
     public class AnimatedHittable : AnimatorController {
-         protected int hitHash { get; set; }
-
-        private void Awake() {
-           hitHash = Animator.StringToHash("bIsHurt");
-        }
+        protected const int hitHash = 3;
 
         public void OnHitEnable() {
             if (!AnimatorController.GetBool(hitHash)) {

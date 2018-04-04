@@ -6,10 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete {
     public class AnimatedRanged : AnimatedHittable {
-        protected int shootHash { get; set; }
-        private void Awake() {
-            shootHash = Animator.StringToHash("bIsShooting");
-        }
+        protected const int shootHash = 4;
 
         public void OnShootEnable() {
             if (!AnimatorController.GetBool(shootHash)) {
