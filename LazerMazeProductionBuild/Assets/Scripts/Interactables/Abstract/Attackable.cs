@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿namespace Assets.Scripts.Interactables.Abstract {
 
-namespace Assets.Scripts.Interactables.Abstract {
-    public abstract class Attackable : MonoBehaviour {
-        public float MaxHP { get; set; }
+    /**
+     * Base class for every object that can be attacked
+     */
+    public abstract class Attackable : UserComponent {
         protected float CurrentHP { get; set; }
-
-        public abstract void OnHit(float damage);
+        public float MaxHP { get; set; }
         protected abstract void CheckHP();
         protected abstract void Kill();
+        public abstract void OnHit(float damage);
     }
 }

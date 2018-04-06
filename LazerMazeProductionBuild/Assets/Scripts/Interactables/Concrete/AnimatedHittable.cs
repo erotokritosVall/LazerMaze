@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 namespace Assets.Scripts.Interactables.Concrete {
-    public class AnimatedHittable : AnimatorController {
-        private readonly int hitHash = Animator.StringToHash("bIsHurt");
 
-        public void OnHitEnable() {
+    /**
+     * Component for objects that have a hurt animation
+     */
+    public class AnimatedHittable : AnimatedBasic {
+        private readonly int hitHash = Animator.StringToHash("bIsHurt");
+        public override void OnHitEnable() {
             if (!AnimatorController.GetBool(hitHash)) {
-                AnimatorController.SetBool(hitHash, true);
+                AnimatorController.SetBool(hitHash, true);              
             }
         }
 
-        public void OnHitDisable() {
+        public override void OnHitDisable() {
             if (AnimatorController.GetBool(hitHash)) {
                 AnimatorController.SetBool(hitHash, false);
             }

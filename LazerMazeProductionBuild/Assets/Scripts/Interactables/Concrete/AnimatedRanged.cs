@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete {
+
+    /**
+     * Components for objects that have a shoot animation
+     */
     public class AnimatedRanged : AnimatedHittable {
         private readonly int shootHash = Animator.StringToHash("bIsShooting");
         private bool isShooting = false;
@@ -14,13 +14,13 @@ namespace Assets.Scripts.Interactables.Concrete {
             AnimatorController.SetBool(shootHash, isShooting);
         }
 
-        public void OnShootEnable() {
+        public override void OnShootEnable() {
             if (!isShooting && !isWalking) {
                 ChangeBool();
             }
         }
 
-        public void OnShootDisable() {
+        public override void OnShootDisable() {
             if (isShooting) {
                 ChangeBool();
             }

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
-using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.Interactables.Concrete {
-    public class AnimatorController : Animated {
+
+    /**
+     * Component for objects that have moving animations
+     */
+    public class AnimatedBasic : Animated {
         private bool isFacingRight = true;
         private  readonly int xHash = Animator.StringToHash("xAxis");
         private  readonly int zHash = Animator.StringToHash("zAxis");
@@ -15,13 +14,10 @@ namespace Assets.Scripts.Interactables.Concrete {
         protected readonly int walkHash = Animator.StringToHash("bIsWalking");
         protected bool isWalking = false;
 
-        public float CachedX { get; private set; }
-        public float CachedZ { get; private set; }
-
         private void Awake() {
             AnimatorController = GetComponent<Animator>();
-            CachedX = AnimatorController.GetFloat(xHash);
-            CachedZ = AnimatorController.GetFloat(zHash);
+            cachedX = AnimatorController.GetFloat(xHash);
+            cachedZ = AnimatorController.GetFloat(zHash);
         }
 
         private void FlipAnimation() {
@@ -37,9 +33,9 @@ namespace Assets.Scripts.Interactables.Concrete {
                     isWalking = false;
                     AnimatorController.SetBool(walkHash, isWalking);
                 } else {
-                    if (CachedX != xParam || CachedZ != zParam) {
-                        CachedX = xParam;
-                        CachedZ = zParam;
+                    if (cachedX != xParam || cachedZ != zParam) {
+                        cachedX = xParam;
+                        cachedZ = zParam;
                         AnimatorController.SetFloat(xHash, xParam);
                         AnimatorController.SetFloat(zHash, zParam);
                         if (xParam > 0 && !isFacingRight) {
@@ -51,8 +47,8 @@ namespace Assets.Scripts.Interactables.Concrete {
                 }               
             } else {
                 if (xParam != 0 || zParam != 0) {
-                    CachedX = xParam;
-                    CachedZ = zParam;
+                    cachedX = xParam;
+                    cachedZ = zParam;
                     AnimatorController.SetFloat(xHash, xParam);
                     AnimatorController.SetFloat(zHash, zParam);
                     isWalking = true;
@@ -65,5 +61,10 @@ namespace Assets.Scripts.Interactables.Concrete {
                 }
             }
         }
+
+        public override void OnHitEnable() { }
+        public override void OnHitDisable() { }
+        public override void OnShootEnable() { }
+        public override void OnShootDisable() { }
     }
 }

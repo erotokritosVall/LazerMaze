@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using Assets.Scripts.Interactables.Abstract;
+﻿using Assets.Scripts.Interactables.Abstract;
 
 namespace Assets.Scripts.Interactables.Concrete {
-    public class AttackableBasic : Attackable {
-        private void Awake() {
-            MaxHP = CurrentHP = 50;
-        }
 
-        public override void OnHit(float damage) {
-            CurrentHP -= damage;
-            CheckHP();
+    /**
+     * Component that doesn't play hurt animation when hit
+     */
+    public class AttackableBasic : Attackable {
+        protected virtual void Awake() {
+            MaxHP = CurrentHP = 50;
         }
 
         protected override void CheckHP() {
@@ -24,6 +18,11 @@ namespace Assets.Scripts.Interactables.Concrete {
 
         protected override void Kill() {
             Destroy(gameObject);
+        }
+
+        public override void OnHit(float damage) {
+            CurrentHP -= damage;
+            CheckHP();
         }
     }
 }

@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
 
 namespace Assets.Scripts.Interactables.Concrete {
-    public class AttackerRanged : Attacker {
 
+    /**
+     * Component for ranged attackers
+     */
+    public class AttackerRanged : AttackerMelee {
         [SerializeField]
         private GameObject laser;
-        
-        public Vector3 LaserDirection { get; set; }
+        private Vector3 laserDirection;
  
-        private void Awake() {
-            AttackDamage = 5.0f;
-            TimePassedSincePreviousAttack = AttackRechargeTimer = 0.8f;
-            LaserDirection = Vector3.zero;
+        protected override void Awake() {
+            base.Awake();
+            laserDirection = Vector3.zero;
+        }
+
+        protected override void Update() {
+            base.Update();
         }
 
         private Quaternion LaserRotation() {
-            return Quaternion.Euler(90, LaserDirection.z * 90, 0);
+            return Quaternion.Euler(90, laserDirection.z * 90, 0);
         }
+
 
         public override void Attack(Attackable target = null) {
             if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
+                laserDirection = new Vector3(componentManager.animatorComponent.CachedX, 0, componentManager.animatorComponent.CachedZ);
+                componentManager.animatorComponent.OnShootEnable();
                 LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
-                laserController.SetValues(LaserDirection);
+                laserController.SetValues(laserDirection, tag);
+                TimePassedSincePreviousAttack = 0.0f;
             }
         }
     }

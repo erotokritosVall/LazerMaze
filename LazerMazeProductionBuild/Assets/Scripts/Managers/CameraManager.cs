@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Managers {
+
+    /**
+     * Handles the camera to follow the player
+     */
     public class CameraManager : MonoBehaviour {
         private Transform player;
         private const float yPos = 4.0f;
@@ -14,7 +14,7 @@ namespace Assets.Scripts.Managers {
         }
 
         private void LateUpdate() {
-            Vector3 newPosition = new Vector3(player.position.x, yPos, player.position.z);
+            Vector3 newPosition = new Vector3(player.position.x, yPos, player.position.z - 3);
             transform.position = newPosition;
         }
     }

@@ -1,36 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
 
 
 namespace Assets.Scripts.Interactables.Concrete {
-    [RequireComponent(typeof(MovableBasic))]
+
+    /**
+     * Controller that handles the lasers spawned by the player and enemies
+     */
+    [RequireComponent(typeof(MovableLaser))]
     [RequireComponent(typeof(AttackerMelee))]
-    public class LaserController : MonoBehaviour {
-        private MovableBasic movableBasic;
-        private AttackerMelee attackerMelee;
+    public class LaserController : UserComponent {
+        private const string enemyTag = "Enemy";
+        private float x, z;
+        private string parentTag;
 
         private void Awake() {
-            movableBasic = GetComponent<MovableBasic>();
-            attackerMelee = GetComponent<AttackerMelee>();
+            
         }
-
         private void FixedUpdate() {
-            movableBasic.Move();
+            componentManager.movableComponent.Move(x, z);
         }
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Enemy")) {
-                attackerMelee.Attack(other.GetComponent<Attackable>());
+                componentManager.attackerComponent.Attack(other.GetComponent<Attackable>());
             }
-            Destroy(gameObject);
+            if (!other.CompareTag(parentTag)) {
+                Destroy(gameObject);
+            }
         }
 
-        public void SetValues(Vector3 direction) {
-            movableBasic.MoveDirection = direction;
+        public void SetValues(Vector3 direction, string tag) {
+            parentTag = tag;
+            x = direction.x;
+            z = direction.z;
+            componentManager.movableComponent.Move(x, z);
+            if (parentTag.CompareTo(enemyTag) == 0) {
+                Color32 newColor = Color.red;
+                GetComponent<SpriteRenderer>().color = newColor;
+            }
         }
     }
 }

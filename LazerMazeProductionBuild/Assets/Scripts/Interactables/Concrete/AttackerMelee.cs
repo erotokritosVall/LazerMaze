@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
 
 namespace Assets.Scripts.Interactables.Concrete {
+
+    /**
+     * Component that handles melee attacks
+     */
     public class AttackerMelee : Attacker {
-        private void Awake() {
+        protected virtual void Awake() {
             AttackDamage = 5.0f;
             AttackRechargeTimer = TimePassedSincePreviousAttack = 0.8f;
+        }
+
+        protected virtual void Update() {
+            if (TimePassedSincePreviousAttack < AttackRechargeTimer) {
+                TimePassedSincePreviousAttack += Time.deltaTime;
+            }
         }
 
         public override void Attack(Attackable target = null) {

@@ -19,7 +19,7 @@ namespace Assets.Scripts.Pathfinding {
         public int FScore {
             get { return (GScore + HScore); }
         }
-        int IHeapItem<PathfinderNode>.HeapIndex { get; set; }
+        public int HeapIndex { get; set; }
 
         public PathfinderNode(Vector3 position) {
             Position = position;
