@@ -12,7 +12,7 @@ namespace Assets.Scripts.Interactables.Concrete {
             AttackRechargeTimer = TimePassedSincePreviousAttack = 0.8f;
         }
 
-        protected virtual void Update() {
+        private void Update() {
             if (TimePassedSincePreviousAttack < AttackRechargeTimer) {
                 TimePassedSincePreviousAttack += Time.deltaTime;
             }
@@ -22,6 +22,7 @@ namespace Assets.Scripts.Interactables.Concrete {
             if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
                 if (target != null) {
                     target.OnHit(AttackDamage);
+                    TimePassedSincePreviousAttack = 0.0f;
                 }
             }
         }

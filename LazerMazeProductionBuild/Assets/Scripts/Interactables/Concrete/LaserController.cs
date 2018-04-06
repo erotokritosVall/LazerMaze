@@ -7,37 +7,38 @@ namespace Assets.Scripts.Interactables.Concrete {
     /**
      * Controller that handles the lasers spawned by the player and enemies
      */
-    [RequireComponent(typeof(MovableLaser))]
+    [RequireComponent(typeof(MovableBasic))]
     [RequireComponent(typeof(AttackerMelee))]
     public class LaserController : UserComponent {
-        private const string enemyTag = "Enemy";
-        private float x, z;
+        private string targetTag;
         private string parentTag;
+        private float x, z;
 
-        private void Awake() {
-            
-        }
         private void FixedUpdate() {
             componentManager.movableComponent.Move(x, z);
         }
 
-        private void OnTriggerEnter(Collider other) {
-            if (other.CompareTag("Enemy")) {
-                componentManager.attackerComponent.Attack(other.GetComponent<Attackable>());
+        private void OnCollisionEnter(Collision collision) {
+            if (collision.collider.CompareTag(targetTag)) {
+                componentManager.attackerComponent.Attack(collision.collider.GetComponent<Attackable>());
             }
-            if (!other.CompareTag(parentTag)) {
+            else if (!collision.collider.CompareTag(parentTag)) {
                 Destroy(gameObject);
             }
         }
 
         public void SetValues(Vector3 direction, string tag) {
-            parentTag = tag;
+        const string enemyTag = "Enemy";
+        const string playerTag = "Player";
+        parentTag = tag;
             x = direction.x;
             z = direction.z;
-            componentManager.movableComponent.Move(x, z);
             if (parentTag.CompareTo(enemyTag) == 0) {
                 Color32 newColor = Color.red;
                 GetComponent<SpriteRenderer>().color = newColor;
+                targetTag = playerTag;
+            } else {
+                targetTag = enemyTag;
             }
         }
     }

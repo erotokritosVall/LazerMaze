@@ -13,23 +13,30 @@ namespace Assets.Scripts.Interactables.Concrete {
  
         protected override void Awake() {
             base.Awake();
-            laserDirection = Vector3.zero;
-        }
-
-        protected override void Update() {
-            base.Update();
+            SetLaserDirection(0, 1);
         }
 
         private Quaternion LaserRotation() {
             return Quaternion.Euler(90, laserDirection.z * 90, 0);
         }
 
+        private Vector3 LaserPosition() {
+            float x = transform.position.x + laserDirection.x / 2;
+            float z = transform.position.z + laserDirection.z / 2;
+            return new Vector3(x, 0.1f, z);
+        }
+
+        private void SetLaserDirection(float x, float z) {
+            laserDirection.x = x;
+            laserDirection.z = z;
+        }
 
         public override void Attack(Attackable target = null) {
             if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
-                laserDirection = new Vector3(componentManager.animatorComponent.CachedX, 0, componentManager.animatorComponent.CachedZ);
+                SetLaserDirection(componentManager.animatorComponent.CachedX, 
+                                  componentManager.animatorComponent.CachedZ);
                 componentManager.animatorComponent.OnShootEnable();
-                LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
+                LaserController laserController = Instantiate(laser, LaserPosition(), LaserRotation()).GetComponent<LaserController>();
                 laserController.SetValues(laserDirection, tag);
                 TimePassedSincePreviousAttack = 0.0f;
             }

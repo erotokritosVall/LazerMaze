@@ -6,7 +6,7 @@ namespace Assets.Scripts.Interactables.Concrete {
      * Component that doesn't play hurt animation when hit
      */
     public class AttackableBasic : Attackable {
-        protected virtual void Awake() {
+        private void Awake() {
             MaxHP = CurrentHP = 50;
         }
 

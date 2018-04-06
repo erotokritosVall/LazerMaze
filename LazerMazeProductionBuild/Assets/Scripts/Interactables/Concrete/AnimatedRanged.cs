@@ -9,20 +9,20 @@ namespace Assets.Scripts.Interactables.Concrete {
         private readonly int shootHash = Animator.StringToHash("bIsShooting");
         private bool isShooting = false;
 
-        private void ChangeBool() {
+        private void ChangeShootState() {
             isShooting = !isShooting;
             AnimatorController.SetBool(shootHash, isShooting);
         }
 
-        public override void OnShootEnable() {
-            if (!isShooting && !isWalking) {
-                ChangeBool();
+        public override void OnShootDisable() {
+            if (isShooting) {
+                ChangeShootState();
             }
         }
 
-        public override void OnShootDisable() {
-            if (isShooting) {
-                ChangeBool();
+        public override void OnShootEnable() {
+            if (!isShooting && !bIsWalking) {
+                ChangeShootState();
             }
         }
     }

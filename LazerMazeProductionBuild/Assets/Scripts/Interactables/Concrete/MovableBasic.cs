@@ -8,7 +8,6 @@ namespace Assets.Scripts.Interactables.Concrete {
      */
     [RequireComponent(typeof(Rigidbody))]
     public class MovableBasic : Movable {
-        protected Rigidbody RigidBody { get; set; }
 
         protected virtual void Awake() {
             RigidBody = GetComponent<Rigidbody>();
@@ -17,7 +16,8 @@ namespace Assets.Scripts.Interactables.Concrete {
         }
 
         public override void Move(float x, float z) {
-            MoveDirection = new Vector3(x, 0, z);
+            MoveDirection.x = x;
+            MoveDirection.z = z;
             RigidBody.velocity = MoveDirection * MoveSpeed;
         }
     }

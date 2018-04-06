@@ -15,11 +15,10 @@ namespace Assets.Scripts.Interactables.Abstract {
         public float CachedZ {
             get { return cachedZ; }
         }
-        protected Animator AnimatorController { get; set; }
         public abstract void SetAnimatorParameters(float xParam, float zParam);
         public abstract void OnHitEnable();
-        public abstract void OnHitDisable();
         public abstract void OnShootEnable();
+        public abstract void OnHitDisable();
         public abstract void OnShootDisable();
     }
 }

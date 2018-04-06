@@ -7,12 +7,13 @@ namespace Assets.Scripts.Interactables.Concrete {
      * Component for objects that have moving animations
      */
     public class AnimatedBasic : Animated {
-        private bool isFacingRight = true;
+        private bool bIsFacingRight = true;
         private  readonly int xHash = Animator.StringToHash("xAxis");
         private  readonly int zHash = Animator.StringToHash("zAxis");
 
         protected readonly int walkHash = Animator.StringToHash("bIsWalking");
-        protected bool isWalking = false;
+        protected bool bIsWalking = false;
+        protected Animator AnimatorController { get; private set; }
 
         private void Awake() {
             AnimatorController = GetComponent<Animator>();
@@ -24,47 +25,46 @@ namespace Assets.Scripts.Interactables.Concrete {
             Vector3 localScale = transform.localScale;
             localScale.x *= -1;
             transform.localScale = localScale;
-            isFacingRight = !isFacingRight;
+            bIsFacingRight = !bIsFacingRight;
+        }
+
+        private void SetValues(float xParam, float zParam) {
+            cachedX = xParam;
+            cachedZ = zParam;
+            AnimatorController.SetFloat(xHash, xParam);
+            AnimatorController.SetFloat(zHash, zParam);
+            if (xParam > 0 && !bIsFacingRight) {
+                FlipAnimation();
+            } else if (xParam < 0 && bIsFacingRight) {
+                FlipAnimation();
+            }
+        }
+
+        private void ChangeWalkState() {
+            bIsWalking = !bIsWalking;
+            AnimatorController.SetBool(walkHash, bIsWalking);
         }
 
         public override void SetAnimatorParameters(float xParam, float zParam) {
-            if (isWalking) {
+            if (bIsWalking) {
                 if (xParam == 0 && zParam == 0) {
-                    isWalking = false;
-                    AnimatorController.SetBool(walkHash, isWalking);
+                    ChangeWalkState();
                 } else {
                     if (cachedX != xParam || cachedZ != zParam) {
-                        cachedX = xParam;
-                        cachedZ = zParam;
-                        AnimatorController.SetFloat(xHash, xParam);
-                        AnimatorController.SetFloat(zHash, zParam);
-                        if (xParam > 0 && !isFacingRight) {
-                            FlipAnimation();
-                        } else if (xParam < 0 && isFacingRight) {
-                            FlipAnimation();
-                        }
+                        SetValues(xParam, zParam);
                     }
                 }               
             } else {
                 if (xParam != 0 || zParam != 0) {
-                    cachedX = xParam;
-                    cachedZ = zParam;
-                    AnimatorController.SetFloat(xHash, xParam);
-                    AnimatorController.SetFloat(zHash, zParam);
-                    isWalking = true;
-                    AnimatorController.SetBool(walkHash, isWalking);
-                    if (xParam > 0 && !isFacingRight) {
-                        FlipAnimation();
-                    } else if (xParam < 0 && isFacingRight) {
-                        FlipAnimation();
-                    }
+                    ChangeWalkState();
+                    SetValues(xParam, zParam);
                 }
             }
         }
 
         public override void OnHitEnable() { }
-        public override void OnHitDisable() { }
         public override void OnShootEnable() { }
         public override void OnShootDisable() { }
+        public override void OnHitDisable() { }
     }
 }

@@ -10,7 +10,7 @@
         }
 
         public override void Move(float x, float z) {
-            componentManager.animatorComponent.SetAnimatorParameters(MoveDirection.x, MoveDirection.z);
+            componentManager.animatorComponent.SetAnimatorParameters(x, z);
             base.Move(x, z);
         }
     }

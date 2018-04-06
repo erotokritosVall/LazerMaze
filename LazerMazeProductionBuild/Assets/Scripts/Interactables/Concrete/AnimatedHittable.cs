@@ -8,15 +8,22 @@ namespace Assets.Scripts.Interactables.Concrete {
      */
     public class AnimatedHittable : AnimatedBasic {
         private readonly int hitHash = Animator.StringToHash("bIsHurt");
-        public override void OnHitEnable() {
-            if (!AnimatorController.GetBool(hitHash)) {
-                AnimatorController.SetBool(hitHash, true);              
-            }
+        private bool bIsHit = false;
+
+        private void ChangeHitState() {
+            bIsHit = !bIsHit;
+            AnimatorController.SetBool(hitHash, bIsHit);
         }
 
         public override void OnHitDisable() {
-            if (AnimatorController.GetBool(hitHash)) {
-                AnimatorController.SetBool(hitHash, false);
+            if (bIsHit) {
+                ChangeHitState();
+            }
+        }
+
+        public override void OnHitEnable() {
+            if (!bIsHit) {
+                ChangeHitState();             
             }
         }
     }
