@@ -29,7 +29,7 @@ namespace Assets.Scripts.Managers {
 
         private void SpawnTiles(MazeNode[,] grid) {
             const float spawnOffset = 0.5f;
-            const float wallYPos = 0.2f;
+            const float wallYPos = 0.3f;
             for (int x = 0; x < sizeX; x++) {
                 for (int z = 0; z < sizeZ; z++) {
                     Vector3 floorSpawnPosition = new Vector3(x, 0, z);

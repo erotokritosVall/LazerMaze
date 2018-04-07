@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
+using Assets.Scripts.Interactables.Concrete.Components;
 
-namespace Assets.Scripts.Interactables.Concrete {
+namespace Assets.Scripts.Interactables.Concrete.Controllers {
     /**
      * Component that controls and synchronizes player actions
      */
+     [RequireComponent(typeof(AnimatedRanged))]
+     [RequireComponent(typeof(AttackableAnimated))]
+     [RequireComponent(typeof(AttackerRanged))]
+     [RequireComponent(typeof(MovableAnimated))]
     public class PlayerController : UserControlled {
         private bool bShouldShoot = false;
 

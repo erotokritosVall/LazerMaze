@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.Scripts.Interactables.Concrete {
+namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
      * Component for objects that have a hurt animation

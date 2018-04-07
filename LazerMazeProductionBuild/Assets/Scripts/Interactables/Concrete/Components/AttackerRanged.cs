@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
+using Assets.Scripts.Interactables.Concrete.Controllers;
 
-namespace Assets.Scripts.Interactables.Concrete {
+namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
      * Component for ranged attackers
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Interactables.Concrete {
  
         protected override void Awake() {
             base.Awake();
-            SetLaserDirection(0, 1);
+            laserDirection = new Vector3(0, 0, 1);
         }
 
         private Quaternion LaserRotation() {
@@ -21,20 +22,17 @@ namespace Assets.Scripts.Interactables.Concrete {
         }
 
         private Vector3 LaserPosition() {
-            float x = transform.position.x + laserDirection.x / 2;
-            float z = transform.position.z + laserDirection.z / 2;
-            return new Vector3(x, 0.1f, z);
+            return new Vector3(transform.position.x, transform.position.y - 0.02f, transform.position.z);
         }
 
-        private void SetLaserDirection(float x, float z) {
-            laserDirection.x = x;
-            laserDirection.z = z;
+        private void SetLaserDirection() {
+            laserDirection.x = componentManager.animatorComponent.CachedX;
+            laserDirection.z = componentManager.animatorComponent.CachedZ;
         }
 
         public override void Attack(Attackable target = null) {
             if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
-                SetLaserDirection(componentManager.animatorComponent.CachedX, 
-                                  componentManager.animatorComponent.CachedZ);
+                SetLaserDirection();
                 componentManager.animatorComponent.OnShootEnable();
                 LaserController laserController = Instantiate(laser, LaserPosition(), LaserRotation()).GetComponent<LaserController>();
                 laserController.SetValues(laserDirection, tag);

@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Interactables.Abstract;
 using UnityEngine;
 
-namespace Assets.Scripts.Interactables.Managers {
+namespace Assets.Scripts.Interactables.Concrete.Managers {
 
     /**
      * Class that gives access to components so they can communicate with each other
@@ -17,8 +17,9 @@ namespace Assets.Scripts.Interactables.Managers {
             attackableComponent = GetComponent<Attackable>();
             attackerComponent = GetComponent <Attacker>();
             movableComponent = GetComponent<Movable>();
-            foreach(UserComponent component in GetComponents<UserComponent>()) {
+            foreach(IUserComponent component in GetComponents<IUserComponent>()) {
                 component.componentManager = this;
+                Debug.Log("component added");
             }
         }
     }

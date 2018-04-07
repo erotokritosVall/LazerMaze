@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
 
-namespace Assets.Scripts.Interactables.Concrete {
+namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
      * Component that moves without move animations
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Interactables.Concrete {
         protected virtual void Awake() {
             RigidBody = GetComponent<Rigidbody>();
             MoveDirection = Vector3.zero;
-            MoveSpeed = 5.0f;
+            MoveSpeed = 8.0f;
         }
 
         public override void Move(float x, float z) {

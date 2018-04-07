@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Interactables.Concrete.Managers;
 
 namespace Assets.Scripts.Interactables.Abstract {
     /**
      * Base class for handling animations on an object
      */
         [RequireComponent(typeof(Animator))]
-        public abstract class Animated : UserComponent {
+        public abstract class Animated : MonoBehaviour, IUserComponent {
 
+        public ComponentManager componentManager { get; set; }
         protected float cachedX { get; set; }
         public float CachedX {
             get { return cachedX; }

@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Interactables.Abstract;
 
-namespace Assets.Scripts.Interactables.Concrete {
+namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
      * Component that doesn't play hurt animation when hit

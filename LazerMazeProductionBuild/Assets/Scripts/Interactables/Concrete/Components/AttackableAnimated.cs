@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Interactables.Concrete {
+﻿namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
      * Component that plays hurt animation when being hit

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Managers {
         private const float yPos = 4.0f;
 
         private void Awake() {
-            player = GameObject.Find("Brody").transform;
+            player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         private void LateUpdate() {

@@ -1,9 +1,13 @@
-﻿namespace Assets.Scripts.Interactables.Abstract {
+﻿using UnityEngine;
+using Assets.Scripts.Interactables.Concrete.Managers;
+
+namespace Assets.Scripts.Interactables.Abstract {
 
     /**
      * Base class for every object that can be attacked
      */
-    public abstract class Attackable : UserComponent {
+    public abstract class Attackable : MonoBehaviour, IUserComponent {
+        public ComponentManager componentManager { get; set; }
         protected float CurrentHP { get; set; }
         public float MaxHP { get; set; }
         protected abstract void CheckHP();
