@@ -5,11 +5,16 @@ using System.Text;
 
 namespace Assets.Scripts.AI.Abstract {
     public abstract class AiState {
-        AiAction[] actions;
-        AiCondition[] conditions;
+        public AiAction[] actions;
+        public AiCondition[] conditions;
+        public StateTag stateTag;
+        public AiState(AiAction[] actions, AiCondition[] conditions) {
+            this.actions = actions;
+            this.conditions = conditions;
+        }
 
-        public abstract void OnStateEnter(StateController controller);
-        public abstract void OnStateExit(StateController controller);
-        public abstract void OnStateUpdate(StateController controller);
+        public abstract void OnStateEnter(StateController stateController);
+        public abstract void OnStateExit(StateController stateController);
+        public abstract void OnStateUpdate(StateController stateController);
     }
 }
