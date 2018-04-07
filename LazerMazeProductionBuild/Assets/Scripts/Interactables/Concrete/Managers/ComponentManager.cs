@@ -19,7 +19,6 @@ namespace Assets.Scripts.Interactables.Concrete.Managers {
             movableComponent = GetComponent<Movable>();
             foreach(IUserComponent component in GetComponents<IUserComponent>()) {
                 component.componentManager = this;
-                Debug.Log("component added");
             }
         }
     }

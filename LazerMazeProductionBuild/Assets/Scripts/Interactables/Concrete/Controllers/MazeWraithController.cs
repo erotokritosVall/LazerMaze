@@ -34,10 +34,11 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void Start() {
-            Initialise(5.0f, 5.0f, 0.3f, Mathf.Infinity);
+            Initialise(3.0f, 5.0f, 0.3f, Mathf.Infinity);
         }
         private void Update() {
             stateController.Tick();
+            Debug.Log(NextNode);
         }
     }
 }

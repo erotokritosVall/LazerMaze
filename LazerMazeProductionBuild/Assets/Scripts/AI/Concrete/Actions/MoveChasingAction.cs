@@ -7,7 +7,7 @@ namespace Assets.Scripts.AI.Concrete.Actions {
                 base.Act(stateController);
             } else {
                 if (!stateController.owner.BIsPathPending) {
-                    stateController.owner.RequestPath(stateController.owner.player.position);
+                    stateController.owner.RequestPath(stateController.owner.player.position);                    
                 }
             }
         }

@@ -25,6 +25,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             bIsPathPending = false;
         }
         protected void Initialise(float moveSpeed, float attackDamage, float attackRange, float chaseRange) {
+            NextNode = transform.position;
             player = GameObject.FindGameObjectWithTag("Player").transform;
             playerAttackable = player.GetComponent<Attackable>();
             componentManager.movableComponent.MoveSpeed = moveSpeed;

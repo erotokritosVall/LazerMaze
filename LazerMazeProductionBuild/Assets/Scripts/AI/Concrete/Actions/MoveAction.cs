@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.AI.Concrete.Actions {
     public class MoveAction : AiAction {
+        private Vector3 moveDirection;
         public override void Act(StateController stateController) {
             if (stateController.owner.IsDistanceLessOrEqualThan(stateController.owner.NextNode, 0.02f)) {
                 stateController.owner.NextNode = stateController.owner.GetNextWaypoint();
@@ -10,8 +11,8 @@ namespace Assets.Scripts.AI.Concrete.Actions {
                     stateController.owner.NextNode = stateController.owner.transform.position;
                     stateController.owner.ClearWaypoints();
                 }
-            } else {
-                Vector3 moveDirection = stateController.owner.GetMoveDirection(stateController.owner.NextNode);
+                moveDirection = stateController.owner.GetMoveDirection(stateController.owner.NextNode);
+            } else {           
                 stateController.owner.componentManager.movableComponent.Move(moveDirection.x, moveDirection.z);
             }
         }
