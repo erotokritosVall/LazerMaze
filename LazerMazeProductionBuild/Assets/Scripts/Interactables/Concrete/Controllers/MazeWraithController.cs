@@ -11,7 +11,7 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
     [RequireComponent(typeof(AnimatedHittable))]
     [RequireComponent(typeof(AttackableAnimated))]
     [RequireComponent(typeof(AttackerMelee))]
-    [RequireComponent(typeof(MovableAnimated))]
+    [RequireComponent(typeof(EnemyMovable))]
     [RequireComponent(typeof(ComponentManager))]
     public class MazeWraithController : Enemy {
         private void Awake() {
@@ -34,11 +34,10 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void Start() {
-            Initialise(3.0f, 5.0f, 0.3f, Mathf.Infinity);
+            Initialise(3.0f, 5.0f, 0.2f, Mathf.Infinity);
         }
         private void Update() {
-            stateController.Tick();
-            Debug.Log(NextNode);
+                stateController.Tick();
         }
     }
 }

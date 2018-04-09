@@ -10,10 +10,13 @@ namespace Assets.Scripts.AI.Concrete.Actions {
                 if (!stateController.owner.IsDistanceLessOrEqualThan(stateController.owner.NextNode, 1.5f)) {
                     stateController.owner.NextNode = stateController.owner.transform.position;
                     stateController.owner.ClearWaypoints();
-                }
+                    stateController.owner.componentManager.movableComponent.StopMovement();
+                    Debug.Log(stateController.owner.NextNode);
+                }    
+            } else {
                 moveDirection = stateController.owner.GetMoveDirection(stateController.owner.NextNode);
-            } else {           
                 stateController.owner.componentManager.movableComponent.Move(moveDirection.x, moveDirection.z);
+                Debug.Log(stateController.owner.NextNode);
             }
         }
     }

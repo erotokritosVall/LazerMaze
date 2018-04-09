@@ -13,7 +13,6 @@
         public override void Move(float x, float z) {
             componentManager.animatorComponent.SetAnimatorParameters(x, z);
             base.Move(x, z);
-            UnityEngine.Debug.Log(MoveDirection);
         }
     }
 }

@@ -29,13 +29,12 @@ namespace Assets.Scripts.Managers {
 
         private void SpawnTiles(MazeNode[,] grid) {
             const float spawnOffset = 0.5f;
-            const float wallYPos = 0.3f;
             for (int x = 0; x < sizeX; x++) {
                 for (int z = 0; z < sizeZ; z++) {
-                    Vector3 floorSpawnPosition = new Vector3(x, 0, z);
+                    Vector3 floorSpawnPosition = new Vector3(x, -0.5f, z);
                     Transform spawnedTile = Instantiate(floorTilePrefab, floorSpawnPosition, Quaternion.identity, transform).transform;
                     foreach(WallNode wall in grid[x, z].Walls) {
-                        Vector3 wallSpawnPosition = new Vector3(x , wallYPos, z);
+                        Vector3 wallSpawnPosition = new Vector3(x , 0.0f, z);
                         Quaternion wallSpawnRotation = Quaternion.identity;
                         switch (wall.Orientation) {                     
                             case WallOrientation.N:

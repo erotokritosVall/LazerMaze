@@ -10,5 +10,6 @@ namespace Assets.Scripts.Interactables.Abstract {
         public float MoveSpeed { get; set; }
         protected Rigidbody RigidBody { get; set; }
         public abstract void Move(float x, float z);
+        public abstract void StopMovement();
     }
 }

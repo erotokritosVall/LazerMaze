@@ -20,5 +20,9 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             MoveDirection.z = z;
             RigidBody.velocity = MoveDirection * MoveSpeed;
         }
+
+        public override void StopMovement() {
+            RigidBody.velocity = Vector3.zero;
+        }
     }
 }

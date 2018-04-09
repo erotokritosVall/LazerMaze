@@ -50,7 +50,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             return states.Find(state => state.stateTag == tag);
         }
         public Vector3 GetMoveDirection(Vector3 target) {
-            return new Vector3(target.x - transform.position.x, 0, target.z - transform.position.z).normalized;
+            return (target - transform.position).normalized;
         }
         public bool IsDistanceLessOrEqualThan(Vector3 target, float value) {
             return (transform.position - target).sqrMagnitude <= value;

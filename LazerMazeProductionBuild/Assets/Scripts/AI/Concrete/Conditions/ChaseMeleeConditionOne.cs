@@ -5,7 +5,7 @@ namespace Assets.Scripts.AI.Concrete.Conditions {
         public override bool CheckCondition(StateController stateController) {
             if (stateController.owner.IsDistanceLessOrEqualThan(stateController.owner.player.position,
                 stateController.owner.AttackRange)) {
-                stateController.stateToTransition = stateController.owner.GetStateByTag(StateTag.Attacking);
+                stateController.Transition(stateController.owner.GetStateByTag(StateTag.Attacking));
                 return true;
             }
             return false;
