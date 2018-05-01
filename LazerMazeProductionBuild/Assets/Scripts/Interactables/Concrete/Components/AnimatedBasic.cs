@@ -8,17 +8,17 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
      */
     public class AnimatedBasic : Animated {
         private bool bIsFacingRight = true;
-        private  readonly int xHash = Animator.StringToHash("xAxis");
-        private  readonly int zHash = Animator.StringToHash("zAxis");
+        private readonly int xHash = Animator.StringToHash("xAxis");
+        private readonly int zHash = Animator.StringToHash("zAxis");
+        private readonly int walkHash = Animator.StringToHash("bIsWalking");
 
-        protected readonly int walkHash = Animator.StringToHash("bIsWalking");
         protected bool bIsWalking = false;
         protected Animator AnimatorController { get; private set; }
 
         private void Awake() {
             AnimatorController = GetComponent<Animator>();
-            cachedX = AnimatorController.GetFloat(xHash);
-            cachedZ = AnimatorController.GetFloat(zHash);
+            CachedX = AnimatorController.GetFloat(xHash);
+            CachedZ = AnimatorController.GetFloat(zHash);
         }
 
         private void FlipAnimation() {
@@ -29,8 +29,8 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         private void SetValues(float xParam, float zParam) {
-            cachedX = xParam;
-            cachedZ = zParam;
+            CachedX = xParam;
+            CachedZ = zParam;
             AnimatorController.SetFloat(xHash, xParam);
             AnimatorController.SetFloat(zHash, zParam);
             if (xParam > 0 && !bIsFacingRight) {
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
                 if (xParam == 0 && zParam == 0) {
                     ChangeWalkState();
                 } else {
-                    if (cachedX != xParam || cachedZ != zParam) {
+                    if (CachedX != xParam || CachedZ != zParam) {
                         SetValues(xParam, zParam);
                     }
                 }               

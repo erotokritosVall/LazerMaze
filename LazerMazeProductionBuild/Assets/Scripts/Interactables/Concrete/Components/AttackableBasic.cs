@@ -7,11 +7,11 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
      */
     public class AttackableBasic : Attackable {
         private void Awake() {
-            MaxHP = CurrentHP = 50;
+            MaxHP = currentHp = 50;
         }
 
         protected override void CheckHP() {
-            if (CurrentHP <= 0) {
+            if (currentHp <= 0) {
                 Kill();
             }
         }
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         public override void OnHit(float damage) {
-            CurrentHP -= damage;
+            currentHp -= damage;
             CheckHP();
         }
     }

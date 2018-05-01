@@ -10,7 +10,6 @@ namespace Assets.Scripts.Pathfinding {
         public int Count { get; private set; }
 
         public BinaryHeap(int maxSize) {
-            Count = 0;
             items = new T[maxSize];
         }
 

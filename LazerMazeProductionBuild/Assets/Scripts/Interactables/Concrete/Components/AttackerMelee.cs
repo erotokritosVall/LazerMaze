@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Assets.Scripts.Interactables.Abstract;
+﻿using Assets.Scripts.Interactables.Abstract;
+using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete.Components {
 
@@ -7,23 +7,27 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
      * Component that handles melee attacks
      */
     public class AttackerMelee : Attacker {
+        public Attackable target;
+
         protected virtual void Awake() {
             AttackDamage = 5.0f;
-            AttackRechargeTimer = TimePassedSincePreviousAttack = 0.8f;
+            AttackRechargeTimer = timePassedSincePreviousAttack = 1.0f;
         }
 
-        private void Update() {
-            if (TimePassedSincePreviousAttack < AttackRechargeTimer) {
-                TimePassedSincePreviousAttack += Time.deltaTime;
+        public override void Tick() {
+            if (timePassedSincePreviousAttack < AttackRechargeTimer) {
+                timePassedSincePreviousAttack += Time.deltaTime;
             }
         }
 
-        public override void Attack(Attackable target = null) {
-            if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
-                if (target != null) {
-                    target.OnHit(AttackDamage);
-                    TimePassedSincePreviousAttack = 0.0f;
-                }
+        public override bool IsAbleToAttack() {
+            return (timePassedSincePreviousAttack >= AttackRechargeTimer);
+        }
+
+        public override void Attack() {
+            if (target != null) {
+                target.OnHit(AttackDamage);
+                timePassedSincePreviousAttack = 0.0f;
             }
         }
     }

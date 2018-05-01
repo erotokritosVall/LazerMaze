@@ -21,23 +21,17 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             return Quaternion.Euler(90, laserDirection.z * 90, 0);
         }
 
-        private Vector3 LaserPosition() {
-            return new Vector3(transform.position.x, transform.position.y - 0.02f, transform.position.z);
-        }
-
         private void SetLaserDirection() {
-            laserDirection.x = componentManager.animatorComponent.CachedX;
-            laserDirection.z = componentManager.animatorComponent.CachedZ;
+            Animated animated = GetComponent<Animated>();
+            laserDirection.x = animated.CachedX;
+            laserDirection.z = animated.CachedZ;
         }
 
-        public override void Attack(Attackable target = null) {
-            if (TimePassedSincePreviousAttack >= AttackRechargeTimer) {
+        public override void Attack() {
                 SetLaserDirection();
-                componentManager.animatorComponent.OnShootEnable();
-                LaserController laserController = Instantiate(laser, LaserPosition(), LaserRotation()).GetComponent<LaserController>();
-                laserController.SetValues(laserDirection, tag);
-                TimePassedSincePreviousAttack = 0.0f;
-            }
+                LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
+                laserController.SetValues(laserDirection, tag, AttackDamage);
+                timePassedSincePreviousAttack = 0.0f;
         }
     }
 }

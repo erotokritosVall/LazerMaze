@@ -1,62 +1,84 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Managers;
+using System.Threading;
 
 namespace Assets.Scripts.Pathfinding {
 
     /**
      * Calculates the path, reconstructs it and handles it to the requester through the delegate function
      */
-    public static class PathCalculator {
+    public class PathCalculator {
+        private PathRequest request;
+        private PathfinderNode[,] grid;
+        private PathfinderNode startingNode;
+        private PathfinderNode targetNode;
+        private BinaryHeap<PathfinderNode> openSet;
+        private HashSet<PathfinderNode> closedSet;
 
-        private static Stack<Vector3> ReconstructPath(PathRequest request) {
+        public PathCalculator(PathRequest request, PathfinderNode[,] grid) {
+            this.request = request;
+            this.grid = grid;
+            startingNode = VectorToNode(request.StartingPosition);
+            targetNode = VectorToNode(request.TargetPosition);
+            openSet = new BinaryHeap<PathfinderNode>(grid.Length);
+            closedSet = new HashSet<PathfinderNode>();
+        }
+
+        private Stack<Vector3> ReconstructPath() {
             Stack<Vector3> path = new Stack<Vector3>();
-            PathfinderNode current = request.TargetPosition;
+            PathfinderNode current = targetNode;
             do {
                 path.Push(current.Position);
-                current = current.Parent;
-            } while (current != request.StartingPosition);
+                current = current.Data.Parent;
+            } while (current != startingNode);
             return path;
         }
 
-        private static int CalculateManhattanDistance(Vector3 startingPosition, Vector3 targetPosition) {
-            float xManhattan = Mathf.Abs(startingPosition.x - targetPosition.x);
-            float zManhattan = Mathf.Abs(startingPosition.z - targetPosition.z);
-            return (int)(xManhattan + zManhattan);
+        private PathfinderNode VectorToNode(Vector3 vector) {
+            int xPos = Mathf.RoundToInt(vector.x);
+            int zPos = Mathf.RoundToInt(vector.z);
+            return grid[xPos, zPos];
+        }
+
+        private float CalculateManhattanDistance(Vector3 startingPosition) {
+            float xManhattan = Mathf.Abs(startingPosition.x - targetNode.Position.x);
+            float zManhattan = Mathf.Abs(startingPosition.z - targetNode.Position.z);
+            return xManhattan + zManhattan;
         }
 
         //A* algorithm implementation
-        public static void StartPathfinding(PathRequest request) {
-            BinaryHeap<PathfinderNode> openSet = new BinaryHeap<PathfinderNode>(PathfinderHandler.GridCount);
-            HashSet<PathfinderNode> closedSet = new HashSet<PathfinderNode>();
-            request.StartingPosition.GScore = 0;
-            request.StartingPosition.HScore = CalculateManhattanDistance(request.StartingPosition.Position, request.TargetPosition.Position);
-            openSet.Add(request.StartingPosition);
-            while (openSet.Count != 0) {
+        public void StartPathfinding() {
+            List<Vector3> indexes = new List<Vector3>();
+            indexes.Add(startingNode.Position);
+            startingNode.Data.HScore = CalculateManhattanDistance(startingNode.Position);
+            openSet.Add(startingNode);
+            while (openSet.Count > 0) {
                 PathfinderNode current = openSet.RemoveFirst();
-                closedSet.Add(current);
-                if (current == request.TargetPosition) {
-                    request.FunctionToCall(ReconstructPath(request));
-                    PathfinderHandler.ThreadLocked = false;
-                    return;
+                if (current.Equals(targetNode)) {
+                    break;
                 }
                 foreach (PathfinderNode neighbor in current.Neighbors) {
-                    if (closedSet.Contains(neighbor))
+                    if (closedSet.Contains(neighbor)) {
                         continue;
-                    int currentGScore = current.GScore + 1;
-                    if (currentGScore < neighbor.GScore || !openSet.Contains(neighbor)) {
-                        neighbor.GScore = currentGScore;
-                        neighbor.HScore = CalculateManhattanDistance(neighbor.Position, request.TargetPosition.Position);
-                        neighbor.Parent = current;
+                    }
+                    int currentGScore = current.Data.GScore + 1;
+                    if (currentGScore < neighbor.Data.GScore || !openSet.Contains(neighbor)) {
+                        neighbor.Data.GScore = currentGScore;
+                        neighbor.Data.HScore = CalculateManhattanDistance(neighbor.Position);
+                        neighbor.Data.Parent = current;
                         if (!openSet.Contains(neighbor)) {
                             openSet.Add(neighbor);
+                            indexes.Add(neighbor.Position);
                         } else {
                             openSet.UpdateItem(neighbor);
                         }
-                    }
+                    }                  
                 }
+                closedSet.Add(current);                  
             }
-            //If path not found(never happens) unlock thread
-            PathfinderHandler.ThreadLocked = false;
+            Stack<Vector3> path = ReconstructPath();
+            PathfindingManager.Instance.PathAcquired(path, request, indexes);
         }
     }
 }

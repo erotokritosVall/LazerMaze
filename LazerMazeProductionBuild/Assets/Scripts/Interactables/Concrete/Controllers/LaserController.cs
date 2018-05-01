@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Interactables.Abstract;
 using Assets.Scripts.Interactables.Concrete.Components;
-using Assets.Scripts.Interactables.Concrete.Managers;
 
 
 namespace Assets.Scripts.Interactables.Concrete.Controllers {
@@ -9,35 +8,40 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
     /**
      * Controller that handles the lasers spawned by the player and enemies
      */
-     [RequireComponent(typeof(AttackableBasic))]
-    [RequireComponent(typeof(MovableBasic))]
-    [RequireComponent(typeof(AttackerMelee))]
-    public class LaserController : MonoBehaviour,IUserComponent {
-        public ComponentManager componentManager { get; set; }
+     
+    [RequireComponent(typeof(MovableWithRB))]
+    public class LaserController : MonoBehaviour {
+        Movable movableComponent;
         private string targetTag;
         private string parentTag;
-        private float x, z;
+        private float attackDamage;
+
+        private void Awake() {
+            movableComponent = GetComponent<Movable>();
+        }
 
         private void FixedUpdate() {
-            componentManager.movableComponent.Move(x, z);
+            movableComponent.Move();
         }
 
         private void OnCollisionEnter(Collision collision) {
             if (collision.collider.CompareTag(targetTag)) {
-                componentManager.attackerComponent.Attack(collision.collider.GetComponent<Attackable>());
+                collision.collider.GetComponent<Attackable>().OnHit(attackDamage);
             }
             else if (collision.collider.CompareTag(parentTag)) {
                 return;
             }
-            componentManager.attackableComponent.OnHit(1000f);
+            Destroy(gameObject);
         }
-
-        public void SetValues(Vector3 direction, string tag) {
-        const string enemyTag = "Enemy";
-        const string playerTag = "Player";
-        parentTag = tag;
-            x = direction.x;
-            z = direction.z;
+        
+        public void SetValues(Vector3 direction, string tag, float attackDamage) {
+            const string enemyTag = "Enemy";
+            const string playerTag = "Player";
+            const float moveSpeed = 7.0f;
+            movableComponent.MoveDirection = direction;
+            movableComponent.MoveSpeed = moveSpeed;
+            this.attackDamage = attackDamage;
+            parentTag = tag;
             if (parentTag.CompareTo(enemyTag) == 0) {
                 Color32 newColor = Color.red;
                 GetComponent<SpriteRenderer>().color = newColor;

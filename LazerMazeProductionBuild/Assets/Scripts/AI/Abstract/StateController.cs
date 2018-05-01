@@ -1,24 +1,27 @@
 ﻿using Assets.Scripts.Interactables.Concrete.Components;
 
 namespace Assets.Scripts.AI.Abstract {
+
     public class StateController {
+
         public AiState currentState;
+        public AiState nextState;
         public Enemy owner { get; set; }
+
         public StateController(AiState startingState, Enemy owner) {
             this.owner = owner;
-            currentState = startingState;
-        }
-        public void Transition(AiState stateToTransition) {
-            if (currentState != stateToTransition) {
-                currentState.OnStateExit(this);
-                currentState = stateToTransition;
-                currentState.OnStateEnter(this);
-                UnityEngine.Debug.Log("Entering : " + stateToTransition.stateTag);
-            }
+            currentState = nextState = startingState;
         }
 
+
         public void Tick() {
-            currentState.OnStateUpdate(this);
+            if (currentState != nextState) {
+                currentState.OnStateExit(this);
+                currentState = nextState;
+                currentState.OnStateEnter(this);
+            } else {
+                currentState.OnStateUpdate(this);
+            }
         }
     }
 }

@@ -9,29 +9,49 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
      [RequireComponent(typeof(AnimatedRanged))]
      [RequireComponent(typeof(AttackableAnimated))]
      [RequireComponent(typeof(AttackerRanged))]
-     [RequireComponent(typeof(MovableAnimated))]
+     [RequireComponent(typeof(MovableWithRB))]
     public class PlayerController : UserControlled {
+
+        private const string horizontalAxis = "Horizontal";
+        private const string verticalAxis = "Vertical";
+        private const string fireButton = "Fire1";
         private bool bShouldShoot = false;
+        private Movable movableComponent;
+        private Animated animatedComponent;
+        private Attacker attackerComponent;
+
+        private void Awake() {
+            movableComponent = GetComponent<Movable>();
+            animatedComponent = GetComponent<Animated>();
+            attackerComponent = GetComponent<Attacker>();
+        }
+
+        private void Start() {
+            movableComponent.MoveSpeed = 5.0f;
+        }
 
         private void Update() {
+            attackerComponent.Tick();
             GetInput();
-        }
-
-        private void FixedUpdate() {
-            componentManager.movableComponent.Move(XInput, ZInput);
-        }
-
-        private void LateUpdate() {
+            animatedComponent.SetAnimatorParameters(xInput, zInput);
             if (bShouldShoot) {
-                componentManager.attackerComponent.Attack();
+                if (attackerComponent.IsAbleToAttack()) {
+                    animatedComponent.OnShootEnable();
+                    attackerComponent.Attack();
+                }
                 bShouldShoot = false;
             }
         }
 
+        private void FixedUpdate() {
+            movableComponent.MoveDirection = new Vector3(xInput, 0, zInput);
+            movableComponent.Move();
+        }
+
         protected override void GetInput() {
-            XInput = Input.GetAxisRaw("Horizontal");
-            ZInput = Input.GetAxisRaw("Vertical");
-            if (Input.GetMouseButtonDown(0)) {
+            xInput = Input.GetAxisRaw(horizontalAxis);
+            zInput = Input.GetAxisRaw(verticalAxis);
+            if (Input.GetButtonDown(fireButton)) {
                 bShouldShoot = true;
             }
         }

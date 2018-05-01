@@ -2,8 +2,6 @@
 
 namespace Assets.Scripts.AI.Concrete.States {
     public class ChasingState : BasicAiState {
-        public ChasingState(AiAction[] actions, AiCondition[] conditions) : base(actions, conditions) {
-            stateTag = StateTag.Chasing;
-        }
+        public ChasingState(AiAction[] actions, AiCondition[] conditions) : base(actions, conditions) { }
     }
 }

@@ -71,8 +71,6 @@ namespace Assets.Scripts.MazeGrid {
                 MazeNode neighborOfCurrentWall = currentWall.Neighbor;
                 if (neighborOfCurrentWall != null && !closedSet.Contains(neighborOfCurrentWall)) {
                     currentWall.Parent.RemoveWall(currentWall);
-                    currentWall.Parent.AddNeighbor(neighborOfCurrentWall);
-                    neighborOfCurrentWall.AddNeighbor(currentWall.Parent);
                     int oppositeWallToRemove = -(int)currentWall.Orientation;
                     neighborOfCurrentWall.RemoveWall(oppositeWallToRemove);
                     openSet.AddRange(neighborOfCurrentWall.Walls);

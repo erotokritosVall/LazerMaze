@@ -3,7 +3,7 @@ using Assets.Scripts.AI.Abstract;
 using Assets.Scripts.AI.Concrete.Actions;
 using Assets.Scripts.AI.Concrete.Conditions;
 using Assets.Scripts.AI.Concrete.States;
-using Assets.Scripts.Interactables.Concrete.Managers;
+using Assets.Scripts.Interactables.Abstract;
 using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete.Controllers {
@@ -11,8 +11,7 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
     [RequireComponent(typeof(AnimatedHittable))]
     [RequireComponent(typeof(AttackableAnimated))]
     [RequireComponent(typeof(AttackerMelee))]
-    [RequireComponent(typeof(EnemyMovable))]
-    [RequireComponent(typeof(ComponentManager))]
+    [RequireComponent(typeof(MovableBasic))]
     public class MazeWraithController : Enemy {
         private void Awake() {
             AiAction[] chasingActions = {
@@ -27,17 +26,20 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
             AiCondition[] attackCondition = {
                 new AttackConditionMelee()
             };
-            ChasingState chasingState = new ChasingState(chasingActions, chasingConditions);
-            states.Add(chasingState);
-            states.Add(new AttackState(attackAction, attackCondition));
-            stateController = new StateController(chasingState, this);
+            states.Add(StateTag.Chasing, new ChasingState(chasingActions, chasingConditions));
+            states.Add(StateTag.Attacking, new AttackState(attackAction, attackCondition));
+            stateController = new StateController(GetState(StateTag.Chasing), this);
         }
 
         private void Start() {
             Initialise(3.0f, 5.0f, 0.2f, Mathf.Infinity);
+            GetComponent<AttackerMelee>().target = Player.GetComponent<Attackable>();
         }
+
         private void Update() {
-                stateController.Tick();
+            attackerComponent.Tick();
+            stateController.Tick();
+            animatedComponent.SetAnimatorParameters(movableComponent.MoveDirection.x, movableComponent.MoveDirection.z);
         }
     }
 }

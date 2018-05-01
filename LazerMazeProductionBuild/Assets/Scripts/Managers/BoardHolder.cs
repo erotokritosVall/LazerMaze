@@ -17,14 +17,17 @@ namespace Assets.Scripts.Managers {
 
         private void Awake() {
             sizeX = sizeZ = 15;
-            SetupLevel();
+        }
+
+        private void Start() {
+           SetupLevel();
         }
 
         private void SetupLevel() {
             MazeGenerator generator = new MazeGenerator(sizeX, sizeZ);
             MazeNode[,] mazeGrid = generator.Generate();
             SpawnTiles(mazeGrid);
-            PathfinderHandler.SetGrid(mazeGrid, sizeX, sizeZ);
+            PathfindingManager.Instance.SetGrid(sizeX, sizeZ);
         }
 
         private void SpawnTiles(MazeNode[,] grid) {

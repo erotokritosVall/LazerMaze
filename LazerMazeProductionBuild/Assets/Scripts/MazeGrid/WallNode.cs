@@ -9,8 +9,8 @@
         public MazeNode Parent { get; private set; }
 
         public WallNode(WallOrientation orientation, MazeNode parent) {
-            this.Orientation = orientation;
-            this.Parent = parent;
+            Orientation = orientation;
+            Parent = parent;
             Neighbor = null;
         }
     }
