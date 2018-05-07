@@ -6,8 +6,11 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
     /**
      * Component that handles melee attacks
      */
+
     public class AttackerMelee : Attacker {
-        public Attackable target;
+
+        [HideInInspector]
+        public Attackable target = null;
 
         protected virtual void Awake() {
             AttackDamage = 5.0f;

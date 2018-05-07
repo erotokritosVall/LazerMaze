@@ -2,12 +2,12 @@
 
     public abstract class AiState {
 
-        public AiAction[] actions;
-        public AiCondition[] conditions;
+        public AiAction[] StateActions { get; private set; }
+        public AiCondition[] StateConditions { get; private set; }
 
         public AiState(AiAction[] actions, AiCondition[] conditions) {
-            this.actions = actions;
-            this.conditions = conditions;
+            StateActions = actions;
+            StateConditions = conditions;
         }
 
         public abstract void OnStateEnter(StateController stateController);

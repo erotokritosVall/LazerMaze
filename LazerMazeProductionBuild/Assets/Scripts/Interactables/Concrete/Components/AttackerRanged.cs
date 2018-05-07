@@ -7,7 +7,9 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
     /**
      * Component for ranged attackers
      */
+
     public class AttackerRanged : AttackerMelee {
+
         [SerializeField]
         private GameObject laser;
         private Vector3 laserDirection;
@@ -18,20 +20,26 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         private Quaternion LaserRotation() {
-            return Quaternion.Euler(90, laserDirection.z * 90, 0);
+            const float ninety = 90;
+            return Quaternion.Euler(ninety, laserDirection.z * ninety, 0);
         }
 
         private void SetLaserDirection() {
-            Animated animated = GetComponent<Animated>();
-            laserDirection.x = animated.CachedX;
-            laserDirection.z = animated.CachedZ;
+            if (target == null) {
+                Animated animated = GetComponent<Animated>();
+                laserDirection.x = animated.CachedX;
+                laserDirection.z = animated.CachedZ;
+            } else {
+                laserDirection = (target.transform.position - transform.position).normalized;
+            }
+
         }
 
         public override void Attack() {
-                SetLaserDirection();
-                LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
-                laserController.SetValues(laserDirection, tag, AttackDamage);
-                timePassedSincePreviousAttack = 0.0f;
+            SetLaserDirection();
+            LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
+            laserController.SetValues(laserDirection, tag, AttackDamage);
+            timePassedSincePreviousAttack = 0.0f;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
     /**
      * Component that moves with rigidbody
      */
+
      [RequireComponent(typeof(Rigidbody))]
     public class MovableWithRB :  Movable {
         private Rigidbody rigidBody;

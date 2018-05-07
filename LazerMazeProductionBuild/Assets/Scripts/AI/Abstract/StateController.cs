@@ -4,15 +4,24 @@ namespace Assets.Scripts.AI.Abstract {
 
     public class StateController {
 
-        public AiState currentState;
+        private AiState currentState;
         public AiState nextState;
-        public Enemy owner { get; set; }
+        public Enemy Owner { get; private set; }
 
         public StateController(AiState startingState, Enemy owner) {
-            this.owner = owner;
+            Owner = owner;
             currentState = nextState = startingState;
         }
 
+        public void StartUp() {
+            if (currentState != null && nextState != null) {
+                currentState.OnStateEnter(this);
+            }
+        }
+
+        public void OnStateChange(StateTag stateTag) {
+            nextState = Owner.GetState(stateTag);
+        }
 
         public void Tick() {
             if (currentState != nextState) {

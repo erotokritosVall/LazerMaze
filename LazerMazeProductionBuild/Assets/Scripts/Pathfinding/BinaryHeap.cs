@@ -5,7 +5,9 @@ namespace Assets.Scripts.Pathfinding {
     /**
      * Binary heap to be used in A* algorithm as the open set
      */
+
     public class BinaryHeap<T> where T : IHeapItem<T> {
+
         private T[] items;
         public int Count { get; private set; }
 

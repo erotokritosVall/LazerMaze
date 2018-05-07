@@ -6,7 +6,8 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
      * Components for objects that have a shoot animation
      */
     public class AnimatedRanged : AnimatedHittable {
-        private readonly int shootHash = Animator.StringToHash("bIsShooting");
+
+        private static readonly int shootHash = Animator.StringToHash("bIsShooting");
         private bool isShooting = false;
 
         private void ChangeShootState() {

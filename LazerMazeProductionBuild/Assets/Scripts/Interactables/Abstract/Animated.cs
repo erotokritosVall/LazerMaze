@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Abstract {
+
     /**
      * Base class for handling animations on an object
      */
-        [RequireComponent(typeof(Animator))]
-        public abstract class Animated : MonoBehaviour {
+
+    [RequireComponent(typeof(Animator))]
+    public abstract class Animated : MonoBehaviour {
 
         public float CachedX { get; protected set; }
         public float CachedZ { get; protected set; }

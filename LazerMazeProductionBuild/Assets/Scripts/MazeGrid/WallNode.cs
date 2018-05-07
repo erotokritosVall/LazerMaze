@@ -4,6 +4,7 @@
      * Holds wall data to be consumed by the MazeNode and MazeGenerator
      */
     public class WallNode {
+
         public MazeNode Neighbor { get; set; }
         public WallOrientation Orientation { get; private set; }
         public MazeNode Parent { get; private set; }

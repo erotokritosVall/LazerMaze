@@ -6,11 +6,13 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
     /**
      * Component for objects that have moving animations
      */
+
     public class AnimatedBasic : Animated {
+
         private bool bIsFacingRight = true;
-        private readonly int xHash = Animator.StringToHash("xAxis");
-        private readonly int zHash = Animator.StringToHash("zAxis");
-        private readonly int walkHash = Animator.StringToHash("bIsWalking");
+        private static readonly int xHash = Animator.StringToHash("xAxis");
+        private static readonly int zHash = Animator.StringToHash("zAxis");
+        private static readonly int walkHash = Animator.StringToHash("bIsWalking");
 
         protected bool bIsWalking = false;
         protected Animator AnimatorController { get; private set; }

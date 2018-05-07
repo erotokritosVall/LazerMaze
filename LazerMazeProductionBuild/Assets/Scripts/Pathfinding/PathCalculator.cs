@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Managers;
-using System.Threading;
 
 namespace Assets.Scripts.Pathfinding {
 
     /**
-     * Calculates the path, reconstructs it and handles it to the requester through the delegate function
+     * Calculates the path, reconstructs it and sends it to the PathfindingManager
      */
+
     public class PathCalculator {
+
         private PathRequest request;
         private PathfinderNode[,] grid;
         private PathfinderNode startingNode;
         private PathfinderNode targetNode;
-        private BinaryHeap<PathfinderNode> openSet;
-        private HashSet<PathfinderNode> closedSet;
 
         public PathCalculator(PathRequest request, PathfinderNode[,] grid) {
             this.request = request;
             this.grid = grid;
             startingNode = VectorToNode(request.StartingPosition);
             targetNode = VectorToNode(request.TargetPosition);
-            openSet = new BinaryHeap<PathfinderNode>(grid.Length);
-            closedSet = new HashSet<PathfinderNode>();
         }
 
         private Stack<Vector3> ReconstructPath() {
@@ -49,6 +46,8 @@ namespace Assets.Scripts.Pathfinding {
 
         //A* algorithm implementation
         public void StartPathfinding() {
+            BinaryHeap<PathfinderNode> openSet = new BinaryHeap<PathfinderNode>(grid.Length);
+            HashSet<PathfinderNode> closedSet = new HashSet<PathfinderNode>();
             List<Vector3> indexes = new List<Vector3>();
             indexes.Add(startingNode.Position);
             startingNode.Data.HScore = CalculateManhattanDistance(startingNode.Position);
@@ -73,9 +72,9 @@ namespace Assets.Scripts.Pathfinding {
                         } else {
                             openSet.UpdateItem(neighbor);
                         }
-                    }                  
+                    }
                 }
-                closedSet.Add(current);                  
+                closedSet.Add(current);
             }
             Stack<Vector3> path = ReconstructPath();
             PathfindingManager.Instance.PathAcquired(path, request, indexes);

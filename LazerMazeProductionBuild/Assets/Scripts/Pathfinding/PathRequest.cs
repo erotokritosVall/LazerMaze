@@ -5,9 +5,11 @@ using System;
 namespace Assets.Scripts.Pathfinding {
 
     /**
-     * Holds the data needed for a path calculation , along with the delegate method to return the path to the caller
+     * Holds the data needed for a path calculation , along with the action to return the path to the caller
      */
+
     public class PathRequest {
+
         public Vector3 StartingPosition { get; private set; }
         public Vector3 TargetPosition { get; private set; }
         public Action<Stack<Vector3>> CallbackAction { get; private set; }

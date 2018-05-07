@@ -7,7 +7,8 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
      * Component for objects that have a hurt animation
      */
     public class AnimatedHittable : AnimatedBasic {
-        private readonly int hitHash = Animator.StringToHash("bIsHurt");
+
+        private static readonly int hitHash = Animator.StringToHash("bIsHurt");
         private bool bIsHurt = false;
 
         private void ChangeHitState() {

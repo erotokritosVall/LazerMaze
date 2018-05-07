@@ -7,6 +7,7 @@ namespace Assets.Scripts.MazeGrid {
      */
 
     public class MazeGenerator {
+
         private int sizeX;
         private int sizeZ;
         private MazeNode[,] grid;
@@ -93,7 +94,7 @@ namespace Assets.Scripts.MazeGrid {
         }
 
         public MazeNode[,] Generate() {
-            CreateGrid();
+            CreateGrid();           
             AddWallNeighbors();
             GenerateMaze();
             CleanupDuplicates();

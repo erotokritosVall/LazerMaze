@@ -7,16 +7,25 @@ namespace Assets.Scripts.Managers {
     /**
      * Responsible for interacting with the maze generator and spawning the maze(floor and walls)
      */
-    public class BoardHolder : MonoBehaviour {
-        private int sizeX;
-        private int sizeZ;
+    public class BoardManager : MonoBehaviour {
+
         [SerializeField]
         private GameObject floorTilePrefab;
         [SerializeField]
         private GameObject wallTilePrefab;
 
+        public static BoardManager Instance { get; private set; }
+        public int SizeX { get; private set; }
+        public int SizeZ { get; private set; }
+
         private void Awake() {
-            sizeX = sizeZ = 15;
+            if (Instance == null) {
+                Instance = this;
+            }
+            else if (Instance != this) {
+                Destroy(this);
+            }
+            SizeX = SizeZ = 15;
         }
 
         private void Start() {
@@ -24,20 +33,20 @@ namespace Assets.Scripts.Managers {
         }
 
         private void SetupLevel() {
-            MazeGenerator generator = new MazeGenerator(sizeX, sizeZ);
+            MazeGenerator generator = new MazeGenerator(SizeX, SizeZ);
             MazeNode[,] mazeGrid = generator.Generate();
             SpawnTiles(mazeGrid);
-            PathfindingManager.Instance.SetGrid(sizeX, sizeZ);
+            PathfindingManager.Instance.SetGrid(SizeX, SizeZ);
         }
 
         private void SpawnTiles(MazeNode[,] grid) {
             const float spawnOffset = 0.5f;
-            for (int x = 0; x < sizeX; x++) {
-                for (int z = 0; z < sizeZ; z++) {
+            for (int x = 0; x < SizeX; x++) {
+                for (int z = 0; z < SizeZ; z++) {
                     Vector3 floorSpawnPosition = new Vector3(x, -0.5f, z);
                     Transform spawnedTile = Instantiate(floorTilePrefab, floorSpawnPosition, Quaternion.identity, transform).transform;
                     foreach(WallNode wall in grid[x, z].Walls) {
-                        Vector3 wallSpawnPosition = new Vector3(x , 0.0f, z);
+                        Vector3 wallSpawnPosition = new Vector3(x , -0.2f, z);
                         Quaternion wallSpawnRotation = Quaternion.identity;
                         switch (wall.Orientation) {                     
                             case WallOrientation.N:

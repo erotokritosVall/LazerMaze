@@ -6,7 +6,8 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
     /**
      * Component that moves without using rigidbody
      */
-    public class MovableBasic : Movable {
+
+    public class MovableWithoutRB : Movable {
 
         public override void Move() {
             transform.position += MoveDirection * MoveSpeed * Time.deltaTime;

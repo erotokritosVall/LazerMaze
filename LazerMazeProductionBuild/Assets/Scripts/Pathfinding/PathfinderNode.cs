@@ -7,7 +7,9 @@ namespace Assets.Scripts.Pathfinding {
      * Node of the graph that will be used for pathfinding
      */
     public class PathfinderNode : IHeapItem<PathfinderNode> {
+
         private HashSet<PathfinderNode> neighbors = new HashSet<PathfinderNode>();
+
         public HashSet<PathfinderNode> Neighbors {
             get { return neighbors; }
         }

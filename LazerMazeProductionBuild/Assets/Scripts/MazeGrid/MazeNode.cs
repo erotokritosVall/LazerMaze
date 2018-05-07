@@ -6,7 +6,9 @@ namespace Assets.Scripts.MazeGrid {
     /**
      * Holds data to be consumed my the MazeGenerator
      */
+
     public class MazeNode {
+
         private List<WallNode> walls = new List<WallNode>();
         public List<WallNode> Walls {
             get { return walls; }

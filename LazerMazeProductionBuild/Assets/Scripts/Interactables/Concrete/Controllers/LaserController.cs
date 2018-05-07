@@ -11,7 +11,8 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
      
     [RequireComponent(typeof(MovableWithRB))]
     public class LaserController : MonoBehaviour {
-        Movable movableComponent;
+
+        private Movable movableComponent;
         private string targetTag;
         private string parentTag;
         private float attackDamage;
@@ -25,11 +26,11 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void OnCollisionEnter(Collision collision) {
-            if (collision.collider.CompareTag(targetTag)) {
-                collision.collider.GetComponent<Attackable>().OnHit(attackDamage);
-            }
-            else if (collision.collider.CompareTag(parentTag)) {
+            if (collision.collider.CompareTag(parentTag)) {
                 return;
+            }
+            else if (collision.collider.CompareTag(targetTag)) {
+                collision.collider.GetComponent<Attackable>().OnHit(attackDamage);
             }
             Destroy(gameObject);
         }

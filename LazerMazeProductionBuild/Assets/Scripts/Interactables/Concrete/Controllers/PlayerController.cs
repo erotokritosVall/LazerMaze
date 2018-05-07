@@ -3,9 +3,11 @@ using Assets.Scripts.Interactables.Abstract;
 using Assets.Scripts.Interactables.Concrete.Components;
 
 namespace Assets.Scripts.Interactables.Concrete.Controllers {
+
     /**
-     * Component that controls and synchronizes player actions
+     * Component that controls player actions
      */
+
      [RequireComponent(typeof(AnimatedRanged))]
      [RequireComponent(typeof(AttackableAnimated))]
      [RequireComponent(typeof(AttackerRanged))]

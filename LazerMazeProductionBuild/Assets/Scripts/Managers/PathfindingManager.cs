@@ -9,11 +9,15 @@ namespace Assets.Scripts.Managers {
     /**
      * Responsible for handling , queueing and proccessing path requests
      */
+
     public class PathfindingManager : MonoBehaviour {
+
         private PathfinderNode[,] pathfinderGrid;
         private Queue<PathRequest> incomingRequests = new Queue<PathRequest>();
+        private bool bIsThreadLocked = false;
+
         public static PathfindingManager Instance { get; private set; }
-        public bool bIsThreadLocked = false;
+
         private void Awake() {
             if (Instance == null) {
                 Instance = this;
@@ -34,10 +38,12 @@ namespace Assets.Scripts.Managers {
         }
 
         public void PathAcquired(Stack<Vector3> path, PathRequest request, List<Vector3> indexes) {
-            request.CallbackAction.Invoke(path);
+            request.CallbackAction(path);
             foreach (Vector3 index in indexes) {
-                pathfinderGrid[(int)index.x, (int)index.z].Data = new AStarData();
-                pathfinderGrid[(int)index.x, (int)index.z].HeapIndex = 0;
+                int x = (int)index.x;
+                int z = (int)index.z;
+                pathfinderGrid[x,z].Data = new AStarData();
+                pathfinderGrid[x,z].HeapIndex = 0;
             }
             bIsThreadLocked = false;
             Tick();

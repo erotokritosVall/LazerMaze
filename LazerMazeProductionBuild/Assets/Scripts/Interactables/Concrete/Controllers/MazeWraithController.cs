@@ -8,23 +8,28 @@ using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete.Controllers {
 
+    /**
+     * Initialises and controlls MazeWraiths
+     */
+
     [RequireComponent(typeof(AnimatedHittable))]
     [RequireComponent(typeof(AttackableAnimated))]
     [RequireComponent(typeof(AttackerMelee))]
-    [RequireComponent(typeof(MovableBasic))]
+    [RequireComponent(typeof(MovableWithoutRB))]
     public class MazeWraithController : Enemy {
+
         private void Awake() {
             AiAction[] chasingActions = {
-                new MoveChasingAction()
+                new ChasingAction()
             };
             AiCondition[] chasingConditions = {
-                new ChaseMeleeConditionOne(),
+                new ChaseToAttackConditionMelee(),
             };
             AiAction[] attackAction = {
-                new AttackAction()
+                new AttackMeleeAction()
             };
             AiCondition[] attackCondition = {
-                new AttackConditionMelee()
+                new AttackToChaseConditionMelee()
             };
             states.Add(StateTag.Chasing, new ChasingState(chasingActions, chasingConditions));
             states.Add(StateTag.Attacking, new AttackState(attackAction, attackCondition));
@@ -32,14 +37,9 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void Start() {
-            Initialise(3.0f, 5.0f, 0.2f, Mathf.Infinity);
+            InitialiseStats(3.0f, 5.0f, 0.2f, Mathf.Infinity);
             GetComponent<AttackerMelee>().target = Player.GetComponent<Attackable>();
-        }
-
-        private void Update() {
-            attackerComponent.Tick();
-            stateController.Tick();
-            animatedComponent.SetAnimatorParameters(movableComponent.MoveDirection.x, movableComponent.MoveDirection.z);
+            stateController.StartUp();
         }
     }
 }
