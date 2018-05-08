@@ -22,7 +22,17 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         private Animated animatedComponent;
         private Attacker attackerComponent;
 
+        public static PlayerController Instance { get; private set; }
+
+        private PlayerController() { }
+
         private void Awake() {
+            if (Instance == null) {
+                Instance = this;
+            }
+            else if (Instance != this) {
+                Destroy(this);
+            }
             movableComponent = GetComponent<Movable>();
             animatedComponent = GetComponent<Animated>();
             attackerComponent = GetComponent<Attacker>();

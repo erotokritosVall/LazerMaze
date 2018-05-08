@@ -16,6 +16,8 @@
         }
     }
 
+    //Opposite numbers (1, -1) , (2, -2) help in removing opposing walls in adjucent tiles so connections(paths) can be 
+    //easily created. See RemoveWall(int orientation) func in MazeNode for a better understanding
     public enum WallOrientation {
         N = 1,
         S = -1,

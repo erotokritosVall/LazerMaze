@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.AI.Abstract;
+using Assets.Scripts.Interactables.Concrete.Controllers;
 
 namespace Assets.Scripts.AI.Concrete.Actions {
 
@@ -8,7 +9,7 @@ namespace Assets.Scripts.AI.Concrete.Actions {
 
         public override void Act(StateController stateController) {
             if (stateController.Owner.IsTargetInView(stateController.Owner.ChaseRange)) {
-                stateController.Owner.movableComponent.MoveDirection = stateController.Owner.GetMoveDirection(stateController.Owner.Player.position);
+                stateController.Owner.movableComponent.MoveDirection = stateController.Owner.GetMoveDirection(PlayerController.Instance.transform.position);
                 stateController.Owner.movableComponent.Move();
                 stateController.Owner.NextNode = stateController.Owner.transform.position;
                 stateController.Owner.ClearWaypoints();
@@ -20,7 +21,7 @@ namespace Assets.Scripts.AI.Concrete.Actions {
                     }
                     stateController.Owner.movableComponent.Move();
                 } else {
-                    stateController.Owner.RequestPath(stateController.Owner.Player.position);
+                    stateController.Owner.RequestPath(PlayerController.Instance.transform.position);
                 }
             }
         }

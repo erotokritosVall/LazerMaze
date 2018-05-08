@@ -18,6 +18,8 @@ namespace Assets.Scripts.Managers {
         public int SizeX { get; private set; }
         public int SizeZ { get; private set; }
 
+        private BoardManager() { }
+
         private void Awake() {
             if (Instance == null) {
                 Instance = this;

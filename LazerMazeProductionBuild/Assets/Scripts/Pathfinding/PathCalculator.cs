@@ -11,13 +11,11 @@ namespace Assets.Scripts.Pathfinding {
     public class PathCalculator {
 
         private PathRequest request;
-        private PathfinderNode[,] grid;
         private PathfinderNode startingNode;
         private PathfinderNode targetNode;
 
-        public PathCalculator(PathRequest request, PathfinderNode[,] grid) {
+        public PathCalculator(PathRequest request) {
             this.request = request;
-            this.grid = grid;
             startingNode = VectorToNode(request.StartingPosition);
             targetNode = VectorToNode(request.TargetPosition);
         }
@@ -32,10 +30,10 @@ namespace Assets.Scripts.Pathfinding {
             return path;
         }
 
-        private PathfinderNode VectorToNode(Vector3 vector) {
+        private static PathfinderNode VectorToNode(Vector3 vector) {
             int xPos = Mathf.RoundToInt(vector.x);
             int zPos = Mathf.RoundToInt(vector.z);
-            return grid[xPos, zPos];
+            return PathfindingManager.Instance.PathfinderGrid[xPos, zPos];
         }
 
         private float CalculateManhattanDistance(Vector3 startingPosition) {
@@ -46,7 +44,7 @@ namespace Assets.Scripts.Pathfinding {
 
         //A* algorithm implementation
         public void StartPathfinding() {
-            BinaryHeap<PathfinderNode> openSet = new BinaryHeap<PathfinderNode>(grid.Length);
+            BinaryHeap<PathfinderNode> openSet = new BinaryHeap<PathfinderNode>(PathfindingManager.Instance.PathfinderGrid.Length);
             HashSet<PathfinderNode> closedSet = new HashSet<PathfinderNode>();
             List<Vector3> indexes = new List<Vector3>();
             indexes.Add(startingNode.Position);

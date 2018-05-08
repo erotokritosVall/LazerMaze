@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Interactables.Abstract;
 using Assets.Scripts.AI.Abstract;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Interactables.Concrete.Controllers;
 
 namespace Assets.Scripts.Interactables.Concrete.Components {
 
@@ -21,7 +22,6 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         public Attacker attackerComponent { get; private set; }
         public Animated animatedComponent { get; private set; }
         public Movable movableComponent { get; private set; }
-        public Transform Player { get; private set; }
         public float AttackRange { get; private set; }
         public float ChaseRange { get; private set; }
         public Vector3 NextNode { get; set; }
@@ -33,7 +33,6 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
 
         protected void InitialiseStats(float moveSpeed, float attackDamage, float attackRange, float chaseRange) {
             NextNode = transform.position;
-            Player = GameObject.FindGameObjectWithTag("Player").transform;
             attackerComponent = GetComponent<Attacker>();
             movableComponent = GetComponent<Movable>();
             animatedComponent = GetComponent<Animated>();
@@ -50,12 +49,12 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         public bool IsTargetInView(float distanceToCheck) {
-            if (stateController.Owner.IsDistanceLessOrEqualThan(Player.position, distanceToCheck)) {
+            if (stateController.Owner.IsDistanceLessOrEqualThan(PlayerController.Instance.transform.position, distanceToCheck)) {
                 const float sphereRadius = 0.15f;
                 RaycastHit hitObject;
-                Ray ray = new Ray(transform.position, GetMoveDirection(Player.position));
+                Ray ray = new Ray(transform.position, GetMoveDirection(PlayerController.Instance.transform.position));
                 if (Physics.SphereCast(ray, sphereRadius, out hitObject, distanceToCheck) &&
-                    hitObject.transform.CompareTag(Player.tag)) {
+                    hitObject.transform.CompareTag(PlayerController.Instance.tag)) {
                     return true;
                 }
             }

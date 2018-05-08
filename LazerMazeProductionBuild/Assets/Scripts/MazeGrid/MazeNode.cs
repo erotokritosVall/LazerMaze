@@ -25,6 +25,9 @@ namespace Assets.Scripts.MazeGrid {
             InitialiseWalls();
         }
 
+        //Two overloaded remove wall functions , one for when we already have the wall we want to remove,
+        //the other for when we know only the orientation of the wall that should be removed. 
+        //Helps in creating connections(paths) between nodes faster.
         public void RemoveWall(WallNode toRemove) {
             walls.Remove(toRemove);
         }

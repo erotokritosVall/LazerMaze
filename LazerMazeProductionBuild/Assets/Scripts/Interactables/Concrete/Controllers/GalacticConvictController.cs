@@ -45,7 +45,7 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
 
         private void Start() {
             InitialiseStats(3.0f, 5.0f, 10.0f, 15.0f);
-            GetComponent<AttackerRanged>().target = Player.GetComponent<Attackable>();
+            GetComponent<AttackerRanged>().target = PlayerController.Instance.GetComponent<Attackable>();
             stateController.StartUp();
         }
     }

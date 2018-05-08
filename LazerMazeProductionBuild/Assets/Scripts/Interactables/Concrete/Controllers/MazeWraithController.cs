@@ -38,7 +38,7 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
 
         private void Start() {
             InitialiseStats(3.0f, 5.0f, 0.2f, Mathf.Infinity);
-            GetComponent<AttackerMelee>().target = Player.GetComponent<Attackable>();
+            GetComponent<AttackerMelee>().target = PlayerController.Instance.GetComponent<Attackable>();
             stateController.StartUp();
         }
     }

@@ -3,7 +3,7 @@
 namespace Assets.Scripts.MazeGrid {
 
     /**
-     * Generates the maze using Prim's algorithm, which BoardHolder uses for spawning the level
+     * Generates the maze data using Prim's algorithm, which BoardHolder uses for spawning the level
      */
 
     public class MazeGenerator {
@@ -26,6 +26,7 @@ namespace Assets.Scripts.MazeGrid {
             }
         }
     
+        //Checks if the adjacent tile is in the grid and adds it as a neighbor of the wall
         private void AddWallNeighbors() {
             for (int i = 0; i < sizeX; i++) {
                 for (int j = 0; j < sizeZ; j++) {
@@ -49,7 +50,7 @@ namespace Assets.Scripts.MazeGrid {
                             }
                             break;
 
-                            default:
+                            case WallOrientation.W:
                             if (i - 1 >= 0) {
                                 wall.Neighbor = grid[i - 1, j];
                             }
@@ -81,6 +82,8 @@ namespace Assets.Scripts.MazeGrid {
             }
         }
 
+        //Cleans up walls that are on the exact same position(only one of them). This happens because Prim's algorithms only 
+        // removes walls to make connections so two adjacent tiles that are not connected will inevitably have two walls between them
         private void CleanupDuplicates() {
             foreach (MazeNode currentNode in grid) {
                 foreach (WallNode currentWall in currentNode.Walls) {

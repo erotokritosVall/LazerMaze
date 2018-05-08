@@ -3,7 +3,9 @@
 namespace Assets.Scripts.Pathfinding {
 
     /**
-     * Binary heap to be used in A* algorithm as the open set
+     * Binary heap to be used in A* algorithm as the open set.
+     * Items are required to provide a HeapIndex and a Compare function so the Heap can use and sort them appropriately
+     * Look at end of file for the IHeapItem Interface
      */
 
     public class BinaryHeap<T> where T : IHeapItem<T> {

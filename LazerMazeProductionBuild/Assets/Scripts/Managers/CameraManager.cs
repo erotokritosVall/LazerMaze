@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Interactables.Concrete.Controllers;
 
 namespace Assets.Scripts.Managers {
 
@@ -8,15 +9,15 @@ namespace Assets.Scripts.Managers {
 
     public class CameraManager : MonoBehaviour {
 
-        private Transform player;
+        private Transform playerTransform;
         private const float yPos = 6.0f;
 
-        private void Awake() {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+        private void Start() {
+            playerTransform = PlayerController.Instance.transform;
         }
 
         private void LateUpdate() {
-            Vector3 newPosition = new Vector3(player.position.x, yPos, player.position.z);
+            Vector3 newPosition = new Vector3(playerTransform.position.x, yPos, playerTransform.position.z);
             transform.position = newPosition;
         }
     }
