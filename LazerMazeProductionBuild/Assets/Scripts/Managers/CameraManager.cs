@@ -9,16 +9,12 @@ namespace Assets.Scripts.Managers {
 
     public class CameraManager : MonoBehaviour {
 
-        private Transform playerTransform;
         private const float yPos = 6.0f;
 
-        private void Start() {
-            playerTransform = PlayerController.Instance.transform;
-        }
-
         private void LateUpdate() {
-            Vector3 newPosition = new Vector3(playerTransform.position.x, yPos, playerTransform.position.z);
-            transform.position = newPosition;
+            transform.position = new Vector3(PlayerController.Instance.transform.position.x, 
+                                              yPos, 
+                                              PlayerController.Instance.transform.position.z);
         }
     }
 }

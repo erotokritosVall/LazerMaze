@@ -83,7 +83,7 @@ namespace Assets.Scripts.MazeGrid {
         }
 
         //Cleans up walls that are on the exact same position(only one of them). This happens because Prim's algorithms only 
-        // removes walls to make connections so two adjacent tiles that are not connected will inevitably have two walls between them
+        //removes walls to make connections so two adjacent tiles that are not connected will inevitably have two walls between them
         private void CleanupDuplicates() {
             foreach (MazeNode currentNode in grid) {
                 foreach (WallNode currentWall in currentNode.Walls) {

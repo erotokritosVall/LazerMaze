@@ -2,13 +2,17 @@
 
 namespace Assets.Scripts.AI.Concrete.States {
 
+    /**
+     * Provides the basic shared functionality of concrete AI states
+     */
+
     public class BasicAiState : AiState {
 
         public BasicAiState(AiAction[] actions, AiCondition[] conditions) : base(actions, conditions) { }
 
         public override void OnStateEnter(StateController stateController) {
             stateController.Owner.NextNode = stateController.Owner.transform.position;
-            stateController.Owner.ClearWaypoints();
+            stateController.Owner.ClearPath();
         }
 
         public override void OnStateUpdate(StateController stateController) {

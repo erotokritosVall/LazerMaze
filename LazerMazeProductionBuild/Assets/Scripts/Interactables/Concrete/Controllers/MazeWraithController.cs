@@ -25,12 +25,14 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
             AiCondition[] chasingConditions = {
                 new ChaseToAttackConditionMelee(),
             };
+
             AiAction[] attackAction = {
                 new AttackMeleeAction()
             };
             AiCondition[] attackCondition = {
                 new AttackToChaseConditionMelee()
             };
+
             states.Add(StateTag.Chasing, new ChasingState(chasingActions, chasingConditions));
             states.Add(StateTag.Attacking, new AttackState(attackAction, attackCondition));
             stateController = new StateController(GetState(StateTag.Chasing), this);

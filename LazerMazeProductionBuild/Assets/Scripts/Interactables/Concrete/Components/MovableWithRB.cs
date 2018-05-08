@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.Interactables.Concrete.Components {
 
     /**
-     * Component that moves with rigidbody
+     * Component that moves using a rigidbody
      */
 
      [RequireComponent(typeof(Rigidbody))]

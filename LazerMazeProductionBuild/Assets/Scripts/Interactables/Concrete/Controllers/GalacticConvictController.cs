@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Interactables.Concrete.Controllers {
 
+    /**
+     * Initialises and controls galactic convicts
+     */
+
     [RequireComponent(typeof(AnimatedRanged))]
     [RequireComponent(typeof(AttackerRanged))]
     [RequireComponent(typeof(AttackableAnimated))]

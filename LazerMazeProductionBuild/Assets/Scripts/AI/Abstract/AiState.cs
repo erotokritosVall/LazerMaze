@@ -1,5 +1,10 @@
 ﻿namespace Assets.Scripts.AI.Abstract {
 
+    /**
+     * Base class for AI states, provides the default AIState constructor.
+     * Each state requires one or more AIActions and AIConditions to work.
+     */
+
     public abstract class AiState {
 
         public AiAction[] StateActions { get; private set; }

@@ -3,6 +3,10 @@ using Assets.Scripts.Interactables.Concrete.Controllers;
 
 namespace Assets.Scripts.AI.Concrete.Conditions {
 
+    /**
+     * Goes from Chase to Attack if Player is in attack range
+     */
+
     public class ChaseToAttackConditionMelee : AiCondition {
 
         public override bool CheckCondition(StateController stateController) {

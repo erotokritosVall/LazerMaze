@@ -59,9 +59,10 @@ namespace Assets.Scripts.Managers {
                 }
             }
             const float rayDistance = 0.5f;
+            Ray ray;
             for (int x = 0; x < sizeX; x++) {
                 for (int z = 0; z < sizeZ; z++) {
-                    Ray ray = new Ray(new Vector3(x, 0, z), Vector3.forward);
+                    ray = new Ray(new Vector3(x, 0, z), Vector3.forward);
                     if (!Physics.Raycast(ray, rayDistance)) {
                         PathfinderGrid[x, z].AddNeighbor(PathfinderGrid[x, z + 1]);
                     }

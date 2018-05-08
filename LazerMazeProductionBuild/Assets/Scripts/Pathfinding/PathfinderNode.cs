@@ -15,7 +15,7 @@ namespace Assets.Scripts.Pathfinding {
         }
 
         public Vector3 Position { get; private set; }
-        public AStarData Data;
+        public AStarData Data = new AStarData();
         public int HeapIndex { get; set; }
 
         public PathfinderNode(Vector3 position) {

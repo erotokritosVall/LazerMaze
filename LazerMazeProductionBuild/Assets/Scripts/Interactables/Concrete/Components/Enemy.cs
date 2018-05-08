@@ -48,7 +48,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             animatedComponent.SetAnimatorParameters(movableComponent.MoveDirection.x, movableComponent.MoveDirection.z);
         }
 
-        public bool IsTargetInView(float distanceToCheck) {
+        public bool IsPlayerInView(float distanceToCheck) {
             if (stateController.Owner.IsDistanceLessOrEqualThan(PlayerController.Instance.transform.position, distanceToCheck)) {
                 const float sphereRadius = 0.15f;
                 RaycastHit hitObject;
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             return waypoints.Count > 0;
         }
 
-        public void ClearWaypoints() {
+        public void ClearPath() {
             waypoints.Clear();
         }
 

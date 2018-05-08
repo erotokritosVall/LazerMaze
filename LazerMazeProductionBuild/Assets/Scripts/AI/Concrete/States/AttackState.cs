@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.AI.Concrete.States {
 
+    /**
+     * Extends basic state's functionallity as needed
+     */
+
     public class AttackState : BasicAiState {
 
         public AttackState(AiAction[] actions, AiCondition[] conditions) : base(actions, conditions) { }

@@ -4,6 +4,10 @@ using Assets.Scripts.Managers;
 
 namespace Assets.Scripts.AI.Concrete.Actions {
 
+    /**
+     * Basic Patroling functionality , gets a random point in map and moves to it. Interrupted when Patrol to Chase condition is met
+     */
+
     public class PatrolingAction : AiAction {
 
         private static readonly float distanceForWaypoint = 0.02f;

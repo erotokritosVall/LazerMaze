@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Pathfinding;
-using Assets.Scripts.MazeGrid;
+﻿using Assets.Scripts.MazeGrid;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers {
@@ -7,6 +6,7 @@ namespace Assets.Scripts.Managers {
     /**
      * Responsible for interacting with the maze generator and spawning the maze(floor and walls)
      */
+
     public class BoardManager : MonoBehaviour {
 
         [SerializeField]

@@ -3,6 +3,10 @@ using Assets.Scripts.Interactables.Concrete.Controllers;
 
 namespace Assets.Scripts.AI.Concrete.Conditions {
 
+    /**
+     * Goes from Chase to Patrol if Player is out of a certain range
+     */
+
     public class ChaseToPatrolCondition : AiCondition {
 
         public override bool CheckCondition(StateController stateController) {
