@@ -43,7 +43,6 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void Update() {
-            attackerComponent.Tick();
             GetInput();
             animatedComponent.SetAnimatorParameters(xInput, zInput);
             if (bShouldShoot) {

@@ -43,7 +43,6 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         protected virtual void Update() {
-            attackerComponent.Tick();
             stateController.Tick();
             animatedComponent.SetAnimatorParameters(movableComponent.MoveDirection.x, movableComponent.MoveDirection.z);
         }

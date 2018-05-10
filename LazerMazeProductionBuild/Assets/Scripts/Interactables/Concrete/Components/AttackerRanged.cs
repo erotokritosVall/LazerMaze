@@ -39,7 +39,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             SetLaserDirection();
             LaserController laserController = Instantiate(laser, transform.position, LaserRotation()).GetComponent<LaserController>();
             laserController.SetValues(laserDirection, tag, AttackDamage);
-            timePassedSincePreviousAttack = 0.0f;
+            nextAttackTime = 0.0f;
         }
     }
 }

@@ -14,23 +14,18 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
 
         protected virtual void Awake() {
             AttackDamage = 5.0f;
-            AttackRechargeTimer = timePassedSincePreviousAttack = 1.0f;
-        }
-
-        public override void Tick() {
-            if (timePassedSincePreviousAttack < AttackRechargeTimer) {
-                timePassedSincePreviousAttack += Time.deltaTime;
-            }
+            AttackRechargeTimer = 1.0f;
+            nextAttackTime = Time.time;
         }
 
         public override bool IsAbleToAttack() {
-            return (timePassedSincePreviousAttack >= AttackRechargeTimer);
+            return (Time.time > nextAttackTime);
         }
 
         public override void Attack() {
             if (target != null) {
                 target.OnHit(AttackDamage);
-                timePassedSincePreviousAttack = 0.0f;
+                nextAttackTime = Time.time + AttackRechargeTimer;
             }
         }
     }

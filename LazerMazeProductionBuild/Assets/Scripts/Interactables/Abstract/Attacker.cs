@@ -10,9 +10,8 @@ namespace Assets.Scripts.Interactables.Abstract {
 
         public float AttackDamage { get; set; }
         public float AttackRechargeTimer { get; set; }
-        protected float timePassedSincePreviousAttack;
+        protected float nextAttackTime;
         public abstract void Attack();
         public abstract bool IsAbleToAttack();
-        public abstract void Tick();
     }
 }
