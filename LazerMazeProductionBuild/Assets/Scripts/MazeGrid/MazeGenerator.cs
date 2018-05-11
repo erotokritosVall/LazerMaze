@@ -15,10 +15,10 @@ namespace Assets.Scripts.MazeGrid {
         public MazeGenerator(int sizeX, int sizeZ) {
             this.sizeX = sizeX;
             this.sizeZ = sizeZ;
-            grid = new MazeNode[sizeX, sizeZ];
         }
 
         private void CreateGrid() {
+            grid = new MazeNode[sizeX, sizeZ];
             for (int i = 0; i < sizeX; i++) {
                 for (int j = 0; j < sizeZ; j++) {
                     grid[i, j] = new MazeNode();
@@ -67,7 +67,7 @@ namespace Assets.Scripts.MazeGrid {
             HashSet<MazeNode> closedSet = new HashSet<MazeNode>();
             openSet.AddRange(startingNode.Walls);
             closedSet.Add(startingNode);
-            while(openSet.Count != 0) {
+            while (openSet.Count != 0) {
                 int randomIndex = UnityEngine.Random.Range(0, openSet.Count);
                 WallNode currentWall = openSet[randomIndex];
                 MazeNode neighborOfCurrentWall = currentWall.Neighbor;

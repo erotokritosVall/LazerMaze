@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Assets.Scripts.MazeGrid {
@@ -10,8 +11,8 @@ namespace Assets.Scripts.MazeGrid {
     public class MazeNode {
 
         private List<WallNode> walls = new List<WallNode>();
-        public List<WallNode> Walls {
-            get { return walls; }
+        public ReadOnlyCollection<WallNode> Walls {
+            get { return new ReadOnlyCollection<WallNode>(walls); }
         }
 
         private void InitialiseWalls() {
@@ -33,7 +34,7 @@ namespace Assets.Scripts.MazeGrid {
         }
 
         public void RemoveWall(int orientation) {
-            walls.Remove(walls.First(wall => (int)wall.Orientation == orientation));
+            walls.Remove(walls.First(wall => wall.Orientation.Equals((WallOrientation)orientation)));
         }
     }
 }
