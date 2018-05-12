@@ -19,11 +19,11 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         protected Dictionary<StateTag,AiState> states = new Dictionary<StateTag, AiState>();
         protected StateController stateController { get; set; }
 
-        public Attacker attackerComponent { get; private set; }
-        public Animated animatedComponent { get; private set; }
-        public Movable movableComponent { get; private set; }
         public float AttackRange { get; private set; }
         public float ChaseRange { get; private set; }
+        public Movable movableComponent { get; protected set; }
+        public Attacker attackerComponent { get; protected set; }
+        public Animated animatedComponent { get; protected set; }
         public Vector3 NextNode { get; set; }
 
         private void SetPath(Stack<Vector3> path) {
@@ -45,6 +45,9 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         protected virtual void Update() {
             stateController.Tick();
             animatedComponent.SetAnimatorParameters(movableComponent.MoveDirection.x, movableComponent.MoveDirection.z);
+            if (Input.GetKeyDown(KeyCode.E)) {
+                Debug.Log(stateController.nextState.ToString());
+            }
         }
 
         public bool IsPlayerInView(float distanceToCheck) {

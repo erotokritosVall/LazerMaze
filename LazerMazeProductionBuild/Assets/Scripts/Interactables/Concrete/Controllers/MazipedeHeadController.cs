@@ -2,6 +2,7 @@
 using Assets.Scripts.Interactables.Concrete.Components;
 using Assets.Scripts.AI.Abstract;
 using Assets.Scripts.AI.Concrete.Actions;
+using Assets.Scripts.Interactables.Abstract;
 using Assets.Scripts.AI.Concrete.Conditions;
 using Assets.Scripts.AI.Concrete.States;
 
@@ -47,7 +48,9 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
         }
 
         private void Start() {
-            InitialiseStats(3.0f, 10.0f, 0.2f, 20.0f);
+            InitialiseStats(3.0f, 10.0f, 0.1f, 20.0f);
+            GetComponent<AttackerMelee>().target = PlayerController.Instance.GetComponent<Attackable>();
+            stateController.StartUp();
         }
     }
 }

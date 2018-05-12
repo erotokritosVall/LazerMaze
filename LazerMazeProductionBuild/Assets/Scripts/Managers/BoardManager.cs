@@ -27,7 +27,7 @@ namespace Assets.Scripts.Managers {
             else if (Instance != this) {
                 Destroy(this);
             }
-            SizeX = SizeZ = 15;
+            SizeX = SizeZ = 25;
         }
 
         private void Start() {

@@ -36,6 +36,8 @@ namespace Assets.Scripts.Interactables.Concrete.Controllers {
             movableComponent = GetComponent<Movable>();
             animatedComponent = GetComponent<Animated>();
             attackerComponent = GetComponent<Attacker>();
+            GetComponent<Attackable>().MaxHP = 10000.0f;
+            GetComponent<Attackable>().currentHp = 10000.0f;
         }
 
         private void Start() {

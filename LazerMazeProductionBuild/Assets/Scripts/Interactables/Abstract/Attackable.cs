@@ -9,10 +9,11 @@ namespace Assets.Scripts.Interactables.Abstract {
 
     public abstract class Attackable : MonoBehaviour {
 
-        protected float currentHp;
+        public float currentHp;
         protected int currentLives;
         public int MaxLives { get; set; }
         public float MaxHP { get; set; }
+
         protected abstract IEnumerator OnLifeLost();
         protected abstract IEnumerator OnZeroLives();
         protected abstract void CheckHP();

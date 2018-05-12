@@ -19,7 +19,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
         }
 
         public override bool IsAbleToAttack() {
-            return (Time.time > nextAttackTime);
+            return (Time.time >= nextAttackTime);
         }
 
         public override void Attack() {
