@@ -18,7 +18,7 @@ namespace Assets.Scripts.Interactables.Concrete.Components {
             }
         }
 
-        //Euclidean spiral movement using polar coordinates (L = (a + bθ)*cos(θ) and converting them into euclidean.
+        //Archimedean spiral movement using polar coordinates (L = (a + bθ)*cos(θ) and converting them into euclidean.
         private IEnumerator SpiralMovement() {
             transform.position = PlayerController.Instance.transform.position + Vector3.forward;
             const int numOfTurns = 4;
